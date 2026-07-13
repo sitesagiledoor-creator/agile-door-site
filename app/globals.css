@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/**
+ * Design tokens da Agile Door — fonte única de cores e tipografia.
+ * Azuis e laranjas extraídos por color picker das logos oficiais:
+ *   azul principal #104890 · azul profundo #082868
+ *   laranja #F0560A · laranja claro #F87808 (gradiente da logo)
+ * Derivados: navy-dark (fundos escuros) e orange-dark (texto AA sobre claro).
+ */
+@theme {
+  --color-brand-orange: #f0560a;
+  --color-brand-orange-light: #f87808;
+  --color-brand-orange-dark: #c64a05;
+  --color-brand-blue: #104890;
+  --color-brand-navy: #082868;
+  --color-brand-navy-dark: #051b47;
+  --color-neutral-bg: #f7f8fa;
+  --color-neutral-text: #1a1f26;
+  --color-neutral-muted: #5b6472;
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #1da851;
+}
+
+/* Fontes injetadas por next/font no layout raiz */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Mono", monospace;
+}
+
+/*
+ * Assinatura visual: canto chanfrado (eco do símbolo hexagonal da logo).
+ * Atenção: clip-path corta outline externo — em elementos chanfrados,
+ * usar outline interno (-outline-offset) para o foco de teclado.
+ */
+@utility chamfer {
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+}
+
+@utility chamfer-sm {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+
+/*
+ * Chamariz dos botões de WhatsApp: anel pulsante LENTO (2,8s) atrás do
+ * elemento — o botão e o ícone permanecem nítidos e parados (nada de piscar).
+ * Uma única animação para o FAB circular e para os botões largos das páginas
+ * de produto: o anel expande via inset (crescimento uniforme em qualquer
+ * formato) e segue o border-radius do elemento. Nos botões chanfrados,
+ * aplicar em um wrapper com rounded-* (o clip-path cortaria o ::before).
+ */
+@keyframes whatsapp-pulse-ring {
+  0% {
+    inset: 0;
+    opacity: 0.55;
+  }
+  100% {
+    inset: -14px;
+    opacity: 0;
+  }
+}
+
+@utility whatsapp-pulse {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--color-whatsapp);
+    animation: whatsapp-pulse-ring 2.8s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+    z-index: -1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      content: none;
+      animation: none;
+    }
+  }
+}
+
+body {
+  background: var(--color-neutral-bg);
+  color: var(--color-neutral-text);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-brand-orange);
+  color: var(--color-brand-navy-dark);
+}
