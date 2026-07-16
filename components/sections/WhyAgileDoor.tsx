@@ -34,7 +34,7 @@ export function WhyAgileDoor() {
           <SectionHeading
             eyebrow="Por que a Agile Door"
             title="O fornecedor que instaladores e especificadores esperavam"
-            lead="Quem compra porta automática para instalar ou especificar precisa de três coisas: produto certificado, resposta rápida e alguém do outro lado que conheça o equipamento por dentro. É exatamente isso que entregamos."
+            lead="Quem compra porta automática para instalar ou especificar precisa de: produto certificado, resposta rápida. É exatamente isso que entregamos."
           />
         </Reveal>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

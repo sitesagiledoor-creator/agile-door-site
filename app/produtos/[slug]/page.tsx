@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Fan, FileText } from "lucide-react";
-import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { ProductCard } from "@/components/sections/ProductCard";
 import { ProductGallery } from "@/components/sections/ProductGallery";
@@ -62,17 +61,6 @@ export default async function ProdutoPage({ params }: Props) {
     ),
   };
 
-  // Rich snippets de FAQ nos resultados de busca
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: product.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
-
   const relatedProducts = products.filter((p) => p.slug !== product.slug);
 
   return (
@@ -83,13 +71,6 @@ export default async function ProdutoPage({ params }: Props) {
           __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
-
       {/* Hero do produto */}
       <section className="bg-white py-12 sm:py-16">
         <Container className="grid gap-10 lg:grid-cols-2 lg:gap-14">
@@ -102,7 +83,9 @@ export default async function ProdutoPage({ params }: Props) {
 
           <Reveal delay={0.1}>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-orange-dark">
-              {product.category} — {product.variantLabel}
+              {product.variantLabel
+                ? `${product.category} — ${product.variantLabel}`
+                : product.category}
             </p>
             <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-brand-navy sm:text-5xl">
               {product.name}
@@ -181,7 +164,7 @@ export default async function ProdutoPage({ params }: Props) {
         <Container className="max-w-4xl">
           <Reveal>
             <SectionHeading
-              eyebrow="Visão geral"
+              eyebrow={`Onde instalar ${product.name}!`}
               title={`Por que especificar o ${product.name}`}
             />
             <div className="mt-6 space-y-4 text-base leading-relaxed text-neutral-muted">
@@ -222,7 +205,7 @@ export default async function ProdutoPage({ params }: Props) {
           <Reveal>
             <SectionHeading
               eyebrow="Diferenciais"
-              title="O que o motor, o controlador e as normas garantem"
+              title="Motor e controlador garantem:"
             />
           </Reveal>
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -255,8 +238,7 @@ export default async function ProdutoPage({ params }: Props) {
           <Reveal>
             <SectionHeading
               eyebrow="Ficha técnica"
-              title="Especificações completas"
-              lead="Dados de fábrica do mecanismo, organizados por categoria. Números em fonte monoespaçada são valores medidos ou nominais."
+              title="Especificações técnicas:"
             />
           </Reveal>
           <Reveal delay={0.1} className="mt-12">
@@ -265,50 +247,38 @@ export default async function ProdutoPage({ params }: Props) {
         </Container>
       </section>
 
-      {/* Aplicações recomendadas */}
-      <section className="bg-white py-16 sm:py-20">
-        <Container>
-          <Reveal>
-            <SectionHeading
-              eyebrow="Aplicações"
-              title={`Onde o ${product.name} se encaixa bem`}
-            />
-          </Reveal>
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {product.applications.map((application, index) => (
-              <Reveal key={application.title} delay={index * 0.06}>
-                <li className="h-full border-t-2 border-brand-orange bg-neutral-bg p-5">
-                  <ProductIcon
-                    name={application.icon}
-                    className="h-7 w-7 text-brand-navy"
-                  />
-                  <h3 className="mt-3 font-display text-base font-bold text-brand-navy">
-                    {application.title}
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-neutral-muted">
-                    {application.text}
-                  </p>
-                </li>
-              </Reveal>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* FAQ */}
-      <section className="bg-neutral-bg py-16 sm:py-20">
-        <Container className="max-w-4xl">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Perguntas frequentes"
-              title="O que costumam nos perguntar antes de fechar"
-            />
-          </Reveal>
-          <Reveal delay={0.1} className="mt-10">
-            <Faq items={product.faqs} />
-          </Reveal>
-        </Container>
-      </section>
+      {/* Aplicações recomendadas — só renderiza quando o produto tem itens
+          (removida do AG200 por decisão do cliente, mantida no AG400) */}
+      {product.applications.length > 0 && (
+        <section className="bg-white py-16 sm:py-20">
+          <Container>
+            <Reveal>
+              <SectionHeading
+                eyebrow="Aplicações"
+                title={`Onde o ${product.name} se encaixa bem`}
+              />
+            </Reveal>
+            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {product.applications.map((application, index) => (
+                <Reveal key={application.title} delay={index * 0.06}>
+                  <li className="h-full border-t-2 border-brand-orange bg-neutral-bg p-5">
+                    <ProductIcon
+                      name={application.icon}
+                      className="h-7 w-7 text-brand-navy"
+                    />
+                    <h3 className="mt-3 font-display text-base font-bold text-brand-navy">
+                      {application.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-neutral-muted">
+                      {application.text}
+                    </p>
+                  </li>
+                </Reveal>
+              ))}
+            </ul>
+          </Container>
+        </section>
+      )}
 
       {/* Link interno entre produtos (SEO + descoberta) */}
       {relatedProducts.length > 0 && (

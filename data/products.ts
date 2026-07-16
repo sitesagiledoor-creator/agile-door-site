@@ -97,13 +97,14 @@ const ag200: Product = {
   slug: "ag200",
   name: "AG200",
   category: "Porta de Correr Automática",
-  variantLabel: "Heavy Duty",
+  // Vazio por decisão do cliente (update 8): exibir só a categoria
+  variantLabel: "",
   shortDescription:
     "O workhorse da linha: operador de porta de correr automática robusto, com motor brushless silencioso, folhas de até 200 kg e acionamento por controles remotos — custo-benefício para comércio, condomínios e uso geral intenso.",
   overview: [
-    "O AG200 é o operador que resolve a maioria das especificações: entradas de uso intenso em comércio, condomínios, escritórios e clínicas, com folhas de até 200 kg (ou 2×180 kg em porta dupla). O motor brushless DC de 24V e 100W (2300 rpm) trabalha abaixo de 50 dBA, com ciclo de vida de 2 milhões de operações aprovado pelo TÜV — números que dão segurança para quem assina o projeto e instala com o próprio nome.",
-    "Em campo, o ajuste é todo seu: velocidade de abertura e fechamento reguláveis de 10 a 55 cm/s e tempo de permanência aberta de 0 a 20 segundos, calibrados para o fluxo real do ambiente. O acionamento auxiliar é por controles remotos de função, e a alimentação bivolt automática (100–240V AC) elimina erro de especificação elétrica em qualquer região do Brasil.",
-    "O kit padrão chega completo para a instalação: trilho com tampa, controlador, motor, sensor de micro-ondas, fotocélula, controles remotos, correia, polia, roldanas reforçadas, limitadores, conectores e parafusos — sem item 'vendido separadamente' escondido no orçamento.",
+    "AG200: o operador que resolve a maioria das especificações: entradas de uso intenso em comércio, condomínios, escritórios e clínicas, com folhas de até 200 kg (ou 2×180 kg em porta dupla). O motor brushless DC de 24V e 100W (2300 rpm) trabalha abaixo de 50 dBA, com ciclo de vida de 2 milhões de operações — números que dão segurança para quem assina o projeto e instala com o próprio nome.",
+    "Na instalação, o ajuste é todo seu: velocidade de abertura e fechamento reguláveis de 10 a 55 cm/s e tempo de permanência aberta de 0 a 20 segundos, calibrados para o fluxo real do ambiente. O acionamento auxiliar é por controles remotos de função, e a alimentação bivolt automática (100–240V AC) elimina erro de especificação elétrica em qualquer região do Brasil.",
+    "O kit padrão completo: trilho com tampa, controlador, motor, sensores, fotocélula, correia, polia, roldanas reforçadas, limitadores, conectores e parafusos.",
   ],
   badges: [
     "Linha Heavy Duty — até 200 kg",
@@ -123,7 +124,7 @@ const ag200: Product = {
   features: [
     {
       icon: "volume-off",
-      title: "Silencioso de verdade",
+      title: "Silencioso:",
       text: "Motor brushless DC 24V com nível de ruído inferior a 50 dBA — adequado até para clínicas e recepções que exigem silêncio.",
     },
     {
@@ -134,12 +135,12 @@ const ag200: Product = {
     {
       icon: "plug-zap",
       title: "Bivolt automático",
-      text: "Alimentação 100–240V AC, 50/60Hz: funciona em qualquer instalação elétrica do Brasil, sem transformador.",
+      text: "Alimentação 100–240V AC, 50/60Hz: funciona em qualquer instalação elétrica, sem transformador.",
     },
     {
       icon: "radio",
-      title: "Controles remotos de função",
-      text: "Acionamento e troca de função por controles remotos inclusos; o controlador mantém a configuração após queda de energia.",
+      title: "Controle remoto de função",
+      text: "Acionamento e troca de função por controle remoto; o controlador mantém sua configuração mesmo após queda de energia.",
     },
     {
       icon: "layout-panel-top",
@@ -197,26 +198,6 @@ const ag200: Product = {
       ],
     },
     {
-      title: "Instalação e compatibilidade",
-      rows: [
-        {
-          label: "Largura da folha da porta (LF)",
-          value: "500–2000 mm",
-          mono: true,
-        },
-        {
-          label: "Tensão",
-          value: "AC 100–240V, 50–60Hz (bivolt automático)",
-          mono: true,
-        },
-        {
-          label: "Compatibilidade",
-          value: "Portas com moldura e sem moldura, vidro temperado",
-        },
-        { label: "Material do gabinete", value: "Alumínio, acabamento prata" },
-      ],
-    },
-    {
       title: "Operação",
       rows: [
         { label: "Nível de ruído", value: "Inferior a 50 dBA", mono: true },
@@ -251,28 +232,9 @@ const ag200: Product = {
       ],
     },
   ],
-  applications: [
-    {
-      icon: "store",
-      title: "Comércio",
-      text: "Lojas, farmácias e supermercados com alto fluxo de entrada e saída.",
-    },
-    {
-      icon: "building",
-      title: "Condomínios",
-      text: "Portarias e halls sociais com controle de acesso e conforto para moradores.",
-    },
-    {
-      icon: "briefcase",
-      title: "Escritórios",
-      text: "Recepções corporativas que pedem silêncio e uma entrada de boa impressão.",
-    },
-    {
-      icon: "stethoscope",
-      title: "Clínicas e hospitais",
-      text: "Acesso sem toque, higiene e baixo ruído para ambientes de saúde.",
-    },
-  ],
+  // Seção "Aplicações" removida do AG200 por decisão do cliente (update 8);
+  // o template só renderiza a seção quando o array não está vazio.
+  applications: [],
   faqs: [
     {
       question: "A instalação está inclusa na compra?",

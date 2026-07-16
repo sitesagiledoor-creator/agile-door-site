@@ -136,7 +136,9 @@ export function ProductCarousel({
               </div>
               <div className="flex flex-col p-8 sm:p-10">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-orange-dark">
-                  {product.category} — {product.variantLabel}
+                  {product.variantLabel
+                    ? `${product.category} — ${product.variantLabel}`
+                    : product.category}
                 </p>
                 <h3 className="mt-2 font-display text-3xl font-bold text-brand-navy">
                   {product.name}
