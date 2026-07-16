@@ -74,8 +74,12 @@ site usa o domínio provisório definido em `lib/constants.ts`.
    `.env.example`) ou `SITE.url` em `lib/constants.ts`.
 3. **Ficha técnica em PDF** — preencher `datasheetUrl` em `data/products.ts`.
 4. **Textos marcados** — revisar todos os `[REVISAR COM O CLIENTE]` /
-   `[CONFIRMAR …]` (garantia comercial, prazos, FAQ).
-5. **Políticas** — revisão jurídica das páginas de privacidade e cookies.
+   `[CONFIRMAR …]` (prazos, condições de instalação).
+5. **Garantia** — TODAS as menções de garantia/suporte do fabricante foram
+   removidas do site em 16/07/2026 (decisão comercial, para evitar
+   desacertos com clientes). Reintroduzir nas fichas e textos quando a
+   política de garantia da Agile Door estiver definida.
+6. **Políticas** — revisão jurídica das páginas de privacidade e cookies.
 
 ## Imagens de produto
 

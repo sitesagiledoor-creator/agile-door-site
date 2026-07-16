@@ -218,16 +218,13 @@ const ag200: Product = {
       ],
     },
     {
-      title: "Certificações e garantia",
+      // Menções de garantia removidas do site em 16/07/2026 (decisão
+      // comercial: reintroduzir só quando a política estiver definida)
+      title: "Certificações",
       rows: [
         {
           label: "Certificações do mecanismo",
           value: "CE; ciclo de vida de 2 milhões de operações aprovado pelo TÜV",
-        },
-        {
-          label: "Garantia",
-          value:
-            "1 ano de fábrica [CONFIRMAR COM A AGILE DOOR SE HAVERÁ EXTENSÃO COMERCIAL]",
         },
       ],
     },
@@ -262,9 +259,9 @@ const ag200: Product = {
         "Como o motor é brushless (sem escovas), o desgaste mecânico é menor do que em motores convencionais. Recomenda-se uma revisão preventiva periódica de roldanas, correia e sensores, conforme a intensidade de uso. [REVISAR COM O CLIENTE — periodicidade e plano de manutenção oferecido]",
     },
     {
-      question: "Qual é a garantia e o prazo de entrega?",
+      question: "Qual o prazo de entrega?",
       answer:
-        "O mecanismo tem 1 ano de garantia de fábrica; o prazo de entrega depende da disponibilidade em estoque e da sua região. Solicite um orçamento pelo WhatsApp que informamos as condições atuais junto com a proposta. [REVISAR COM O CLIENTE]",
+        "O prazo de entrega depende da disponibilidade em estoque e da sua região. Solicite um orçamento pelo WhatsApp que informamos as condições atuais junto com a proposta. [REVISAR COM O CLIENTE]",
     },
   ],
   images: [
@@ -299,7 +296,7 @@ const ag400: Product = {
   overview: [
     "O AG400 é a linha avançada do catálogo, com projeto voltado à segurança do pedestre — sensores de presença, fotocélulas, chave de segurança e roldanas com trava antiqueda — e certificações CE, TÜV, ISO 9001 e RoHS. Se o seu projeto é hotel, rede comercial ou edifício corporativo com padrão internacional de especificação, é por aqui que ele passa.",
     "Na prática, é o irmão mais rápido do AG200: motor de 24V e 100W com rotação mais alta (3300 rpm), velocidade de abertura e fechamento de 20 a 60 cm/s e tempo de permanência aberta ajustável de 0 a 60 segundos — margem de calibração extra para entradas de fluxo intenso. As roldanas têm novo design antiqueda, e a capacidade é a mesma: folhas de até 200 kg (ou 2×180 kg em porta dupla).",
-    "O controle é feito por um seletor digital de funções com cinco modos de operação — aberto, fechado, travado, via única e automático — em vez de apenas controle remoto: o gestor do prédio opera a porta sem chamar o instalador. Compatível com sensores de presença, fotocélulas, chave de segurança e teclado de função; mecanismo certificado CE, TÜV, ISO 9001 e RoHS, com 1 ano de garantia de fábrica e suporte pós-venda do fabricante por 3 anos.",
+    "O controle é feito por um seletor digital de funções com cinco modos de operação — aberto, fechado, travado, via única e automático — em vez de apenas controle remoto: o gestor do prédio opera a porta sem chamar o instalador. Compatível com sensores de presença, fotocélulas, chave de segurança e teclado de função; mecanismo certificado CE, TÜV, ISO 9001 e RoHS.",
   ],
   badges: [
     "Seletor Digital de 5 Funções",
@@ -344,8 +341,8 @@ const ag400: Product = {
     },
     {
       icon: "headphones",
-      title: "Suporte estendido",
-      text: "1 ano de garantia de fábrica e suporte pós-venda do fabricante por 3 anos, além do atendimento direto da Agile Door.",
+      title: "Suporte direto",
+      text: "Atendimento técnico direto da Agile Door pelo WhatsApp — antes, durante e depois da instalação.",
     },
   ],
   specGroups: [
@@ -429,17 +426,13 @@ const ag400: Product = {
       ],
     },
     {
-      title: "Certificações e garantia",
+      // Menções de garantia/suporte do fabricante removidas do site em
+      // 16/07/2026 (decisão comercial: reintroduzir quando definidas)
+      title: "Certificações",
       rows: [
         {
           label: "Certificações do mecanismo",
           value: "CE, TÜV, ISO 9001, RoHS",
-        },
-        { label: "Garantia de fábrica", value: "1 ano", mono: true },
-        {
-          label: "Suporte pós-venda do fabricante",
-          value: "3 anos",
-          mono: true,
         },
       ],
     },
@@ -486,11 +479,6 @@ const ag400: Product = {
       question: "A instalação está inclusa na compra?",
       answer:
         "A Agile Door orienta tecnicamente a instalação e pode indicar instaladores parceiros na sua região. As condições de instalação são combinadas junto com o orçamento. [REVISAR COM O CLIENTE]",
-    },
-    {
-      question: "Qual é a garantia e o suporte?",
-      answer:
-        "O mecanismo tem 1 ano de garantia de fábrica e o fabricante mantém suporte pós-venda por 3 anos. [REVISAR COM O CLIENTE — confirmar se a Agile Door oferecerá extensão comercial de garantia]",
     },
     {
       question: "Qual o prazo de entrega?",
