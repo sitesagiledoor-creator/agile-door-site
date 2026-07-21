@@ -72,13 +72,13 @@ export const blogPosts: BlogPost[] = [
         heading: "6. Manutenção e suporte: pergunte antes de comprar",
         paragraphs: [
           "Motores brushless (sem escovas) têm menos desgaste mecânico que motores convencionais — menos manutenção corretiva ao longo da vida útil. Ainda assim, roldanas, correia e sensores merecem revisão preventiva periódica, com frequência proporcional à intensidade de uso.",
-          "Antes de fechar negócio, pergunte: qual a garantia de fábrica? Existe suporte pós-venda e por quanto tempo? Quem atende quando algo sai do lugar? Um fornecedor que responde rápido no WhatsApp na venda tende a responder rápido depois dela também — e é esse o padrão de atendimento que defendemos aqui na Agile Door.",
+          "Antes de fechar negócio, pergunte: existe suporte técnico depois da venda? Quem atende quando algo sai do lugar? Há peças de reposição disponíveis? Um fornecedor que responde rápido no WhatsApp na venda tende a responder rápido depois dela também — e é esse o padrão de atendimento que defendemos aqui na Agile Door.",
         ],
       },
       {
         heading: "Resumo prático",
         paragraphs: [
-          "Meça o vão e fotografe a entrada; estime o peso real da folha e escolha operador com folga de capacidade; exija velocidade e tempo de abertura ajustáveis; confira sensores e certificações reconhecidas; prefira alimentação bivolt automática; e pergunte sobre garantia e suporte antes de assinar. Com essas respostas em mãos, o orçamento certo quase se escolhe sozinho.",
+          "Meça o vão e fotografe a entrada; estime o peso real da folha e escolha operador com folga de capacidade; exija velocidade e tempo de abertura ajustáveis; confira sensores e certificações reconhecidas; prefira alimentação bivolt automática; e confirme como funciona o suporte técnico antes de assinar. Com essas respostas em mãos, o orçamento certo quase se escolhe sozinho.",
           "Ficou com dúvida sobre o seu caso específico? Envie as medidas do seu vão pelo WhatsApp — analisamos e recomendamos a configuração adequada, sem compromisso.",
         ],
       },
