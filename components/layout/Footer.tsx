@@ -39,9 +39,8 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-white/70">
-              Distribuidora brasileira de portas automáticas com tecnologia
-              importada, certificação internacional e atendimento direto, sem
-              burocracia.
+              Portas automáticas com certificações internacionalmente
+              reconhecidas e atendimento técnico direto, sem burocracia.
             </p>
           </div>
 

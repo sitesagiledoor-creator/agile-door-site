@@ -23,7 +23,7 @@ export default function ProdutosPage() {
               dark
               eyebrow="Catálogo"
               title="Nossos produtos"
-              lead="Dois operadores de porta de correr automática: o AG200, linha robusta para uso geral intenso, e o AG400, linha avançada com seletor digital e velocidade superior para entradas comerciais e hoteleiras."
+              lead="Dois operadores de porta de correr automática: o AG200, linha compacta para vãos estreitos, e o AG400, linha heavy duty para entradas de uso intenso."
             />
           </Reveal>
         </Container>

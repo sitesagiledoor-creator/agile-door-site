@@ -68,10 +68,10 @@ const organizationJsonLd = {
   telephone: "+55-19-3217-8282",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "R. José de França Camargo, 74 - Jardim Quarto Centenário",
+    streetAddress: "R. Reinaldo Laubenstein, 415 - Jardim Quarto Centenário",
     addressLocality: "Campinas",
     addressRegion: "SP",
-    postalCode: "13070-199",
+    postalCode: "13070-174",
     addressCountry: "BR",
   },
   contactPoint: {

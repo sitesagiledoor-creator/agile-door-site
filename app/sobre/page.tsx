@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 export const metadata: Metadata = {
   title: "Sobre a Agile Door",
   description:
-    "Conheça a Agile Door: distribuidora brasileira de portas automáticas que importa tecnologia certificada internacionalmente e presta suporte local ágil.",
+    "Conheça a Agile Door: portas automáticas certificadas, com suporte técnico direto e ágil, da especificação ao pós-venda.",
 };
 
 const commitments = [
@@ -45,11 +45,11 @@ export default function SobrePage() {
             />
             <div className="mt-6 space-y-4 text-base leading-relaxed text-neutral-muted">
               <p>
-                Somos uma distribuidora brasileira de operadores de portas
-                automáticas. Selecionamos fabricantes internacionais cujos
-                mecanismos carregam certificações reconhecidas — marcação CE,
-                aprovação TÜV, certificação ISO 9001 e conformidade RoHS — e
-                os trazemos ao Brasil sob a marca Agile Door.
+                A Agile Door fornece portas automáticas certificadas, com
+                suporte técnico direto e ágil — da especificação ao pós-venda.
+                Nossos operadores AG200 e AG400 carregam certificações
+                internacionalmente reconhecidas: marcação CE, aprovação TÜV,
+                certificação ISO 9001 e conformidade RoHS.
               </p>
               <p>
                 Nosso cliente é profissional: serralherias e empresas de

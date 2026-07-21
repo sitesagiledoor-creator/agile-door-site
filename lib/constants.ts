@@ -9,7 +9,7 @@ export const SITE = {
   name: "Agile Door",
   tagline: "Soluções em Portas Automáticas",
   description:
-    "Distribuidora brasileira de portas automáticas com tecnologia importada e certificação internacional (CE, TÜV, ISO 9001) e atendimento ágil e direto.",
+    "Portas automáticas com certificações internacionalmente reconhecidas (CE, TÜV, ISO 9001) e atendimento técnico ágil e direto.",
   // [CONFIRMAR DOMÍNIO DEFINITIVO]
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.agiledoor.com.br",
 } as const;
@@ -25,7 +25,7 @@ export const CONTACT = {
   /** Telefone em formato de link clique-para-ligar */
   phoneHref: "tel:+551932178282",
   address:
-    "R. José de França Camargo, 74 - Jardim Quarto Centenário, Campinas - SP, 13070-199",
+    "R. Reinaldo Laubenstein, 415 - Jardim Quarto Centenário, Campinas - SP, 13070-174",
   hours: "Segunda a sexta, 8h às 18h", // [HORÁRIO A CONFIRMAR]
 } as const;
 

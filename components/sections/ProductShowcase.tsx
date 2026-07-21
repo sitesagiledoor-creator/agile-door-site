@@ -13,7 +13,7 @@ export function ProductShowcase() {
           <SectionHeading
             eyebrow="Nossos produtos"
             title="Duas linhas, cada uma no seu lugar"
-            lead="AG200 para o uso geral intenso, AG400 para projetos que pedem velocidade superior e seletor digital de funções. Compare as fichas e especifique com segurança."
+            lead="AG200 para vãos estreitos, com tela digital de ajuste e cinco modos de função; AG400 para uso intenso, com folhas de até 200 kg. Compare as fichas e especifique com segurança."
           />
         </Reveal>
 
