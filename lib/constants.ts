@@ -1,16 +1,11 @@
-/**
- * Fonte única de dados de contato e identidade da Agile Door.
- * Pendências restantes antes de publicar (ver README):
- * - horário de atendimento (confirmar)
- * - domínio definitivo (NEXT_PUBLIC_SITE_URL)
- */
+/** Fonte única de dados de contato e identidade da Agile Door. */
 
 export const SITE = {
   name: "Agile Door",
   tagline: "Soluções em Portas Automáticas",
   description:
     "Portas automáticas com certificações internacionalmente reconhecidas (CE, TÜV, ISO 9001) e atendimento técnico ágil e direto.",
-  // [CONFIRMAR DOMÍNIO DEFINITIVO]
+  // Definido por NEXT_PUBLIC_SITE_URL no ambiente de deploy
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.agiledoor.com.br",
 } as const;
 
@@ -26,7 +21,7 @@ export const CONTACT = {
   phoneHref: "tel:+551932178282",
   address:
     "R. Reinaldo Laubenstein, 415 - Jardim Quarto Centenário, Campinas - SP, 13070-174",
-  hours: "Segunda a sexta, 8h às 18h", // [HORÁRIO A CONFIRMAR]
+  hours: "Segunda a sexta, 8h às 18h",
 } as const;
 
 export const WHATSAPP_MESSAGES = {
@@ -45,8 +40,7 @@ export function whatsappLink(
 
 /**
  * Páginas do menu principal. O contato não tem página no menu — o item
- * "Fale Conosco" do header abre o WhatsApp diretamente (decisão comercial:
- * todo o atendimento é centralizado no WhatsApp).
+ * "Fale Conosco" do header abre o WhatsApp diretamente.
  */
 export const NAV_LINKS = [
   { href: "/", label: "Início" },

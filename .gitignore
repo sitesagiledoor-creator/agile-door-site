@@ -37,6 +37,7 @@ yarn-error.log*
 
 # configuração local de ferramentas (caminhos absolutos da máquina)
 .claude/
+CLAUDE.local.md
 
 # vercel
 .vercel

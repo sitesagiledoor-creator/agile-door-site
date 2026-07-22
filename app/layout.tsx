@@ -53,9 +53,7 @@ export const viewport: Viewport = {
   themeColor: "#051b47",
 };
 
-// LocalBusiness (subtipo de Organization) com o endereço físico confirmado.
-// [SEO] Quando o horário de atendimento for confirmado, adicionar
-// openingHoursSpecification; geo (lat/long) é opcional.
+// Dados estruturados LocalBusiness (subtipo de Organization).
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",

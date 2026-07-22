@@ -11,12 +11,8 @@
  * (<slug>-hero.png, <slug>-galeria-2.png, …). Para trocar uma foto, basta
  * substituir o arquivo de mesmo nome — nenhum código precisa mudar.
  *
- * Fichas técnicas: transcritas das tabelas oficiais do fabricante fornecidas
- * pela Agile Door (21/07/2026) — os screenshots das tabelas não entram na
- * galeria; viram estas linhas de dados (HTML de verdade, responsivo).
- *
- * Sem menções de garantia por decisão comercial (16/07/2026) — reintroduzir
- * quando a política da Agile Door estiver definida.
+ * Fichas técnicas: transcritas das tabelas oficiais para linhas de dados,
+ * renderizadas como tabela HTML responsiva (nunca como imagem).
  */
 
 export type SpecRow = {
@@ -54,11 +50,6 @@ export type Feature = {
   text: string;
 };
 
-export type Faq = {
-  question: string;
-  answer: string;
-};
-
 export type ProductImage = {
   src: string;
   alt: string;
@@ -85,7 +76,6 @@ export type Product = {
   features: Feature[];
   specGroups: SpecGroup[];
   applications: Feature[];
-  faqs: Faq[];
   images: ProductImage[];
   datasheetUrl?: string;
 };
@@ -101,7 +91,7 @@ const ag200: Product = {
   slug: "ag200",
   name: "AG200",
   category: "Porta de Correr Automática",
-  // Vazio por decisão do cliente (update 8): exibir só a categoria
+  // Vazio: a categoria é exibida sem complemento
   variantLabel: "",
   shortDescription:
     "Operador compacto para vãos estreitos: folhas de até 150 kg (ou 2×140 kg em porta dupla), tela digital de ajuste, proteção anti-esmagamento e operação com bateria durante queda de energia.",
@@ -258,36 +248,8 @@ const ag200: Product = {
       ],
     },
   ],
-  // Seção "Aplicações" removida do AG200 por decisão do cliente (update 8);
-  // o template só renderiza a seção quando o array não está vazio.
+  // A seção de aplicações só é renderizada quando o array tem itens.
   applications: [],
-  faqs: [
-    {
-      question: "A instalação está inclusa na compra?",
-      answer:
-        "A Agile Door orienta tecnicamente a instalação e pode indicar instaladores parceiros na sua região. As condições de instalação são combinadas junto com o orçamento. [REVISAR COM O CLIENTE]",
-    },
-    {
-      question: "O AG200 funciona na rede elétrica da minha cidade?",
-      answer:
-        "Sim. A alimentação é AC 90–240V, 50/60Hz: o equipamento se adapta à tensão da instalação, em qualquer região do Brasil, sem chave seletora nem transformador externo.",
-    },
-    {
-      question: "Serve para a porta que já existe no meu estabelecimento?",
-      answer:
-        "O AG200 é a linha compacta, indicada especialmente para vãos estreitos: folhas de 500 a 2000 mm de largura e até 150 kg (ou 2×140 kg em porta dupla). Envie as medidas pelo WhatsApp e confirmamos a compatibilidade sem compromisso.",
-    },
-    {
-      question: "O que acontece se faltar energia?",
-      answer:
-        "Com a bateria instalada, o AG200 continua operando durante a queda de energia, mantendo a entrada funcional e segura.",
-    },
-    {
-      question: "Qual o prazo de entrega?",
-      answer:
-        "O prazo depende da disponibilidade em estoque e da sua região. Solicite um orçamento pelo WhatsApp que informamos o prazo atual junto com a proposta. [REVISAR COM O CLIENTE]",
-    },
-  ],
   images: [
     {
       src: "/produtos/ag200-hero.png",
@@ -490,33 +452,6 @@ const ag400: Product = {
       icon: "stethoscope",
       title: "Clínicas e hospitais",
       text: "Acesso sem toque, higiene e baixo ruído para ambientes de saúde.",
-    },
-  ],
-  faqs: [
-    {
-      question: "Qual a diferença entre o AG200 e o AG400?",
-      answer:
-        "O AG200 é a linha compacta, pensada para vãos estreitos: folhas de até 150 kg (ou 2×140 kg), tela digital de ajuste, cinco modos de função e operação por bateria. O AG400 é a linha heavy duty: folhas de até 200 kg (ou 2×180 kg), motor de 100W abaixo de 50 dBA e acionamento por controle remoto de função. Na dúvida, envie as medidas do vão pelo WhatsApp que recomendamos o modelo adequado.",
-    },
-    {
-      question: "A instalação está inclusa na compra?",
-      answer:
-        "A Agile Door orienta tecnicamente a instalação e pode indicar instaladores parceiros na sua região. As condições de instalação são combinadas junto com o orçamento. [REVISAR COM O CLIENTE]",
-    },
-    {
-      question: "O AG400 funciona na rede elétrica da minha cidade?",
-      answer:
-        "Sim. A alimentação é bivolt automática (AC 100–240V, 50/60Hz): o equipamento se adapta sozinho à tensão da instalação, sem chave seletora nem transformador externo.",
-    },
-    {
-      question: "Que manutenção o equipamento exige?",
-      answer:
-        "Como o motor é brushless (sem escovas), o desgaste mecânico é menor do que em motores convencionais. Recomenda-se uma revisão preventiva periódica de roldanas, correia e sensores, conforme a intensidade de uso. [REVISAR COM O CLIENTE — periodicidade e plano de manutenção oferecido]",
-    },
-    {
-      question: "Qual o prazo de entrega?",
-      answer:
-        "O prazo depende da disponibilidade em estoque e da sua região. Solicite um orçamento pelo WhatsApp que informamos o prazo atual junto com a proposta. [REVISAR COM O CLIENTE]",
     },
   ],
   images: [

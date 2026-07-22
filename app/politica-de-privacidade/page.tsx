@@ -25,13 +25,6 @@ export default function PoliticaDePrivacidadePage() {
             Última atualização: julho de 2026
           </p>
 
-          <div className="mt-6 border-l-4 border-brand-orange bg-neutral-bg p-4 text-sm leading-relaxed text-neutral-muted">
-            <strong className="text-brand-navy">Aviso interno:</strong> este é
-            um modelo inicial de política de privacidade, elaborado com base em
-            práticas de mercado. Recomenda-se revisão por assessoria jurídica
-            especializada em LGPD antes da publicação definitiva do site.
-          </div>
-
           <div className="prose-agile mt-10 space-y-8 text-base leading-relaxed text-neutral-text">
             <section>
               <h2 className="font-display text-xl font-bold text-brand-navy">
@@ -139,8 +132,7 @@ export default function PoliticaDePrivacidadePage() {
               </h2>
               <p className="mt-3">
                 Dúvidas sobre esta política ou sobre o tratamento dos seus dados
-                podem ser enviadas para {CONTACT.email}. [DEFINIR
-                ENCARREGADO/DPO SE APLICÁVEL]
+                podem ser enviadas para {CONTACT.email}.
               </p>
             </section>
 

@@ -21,7 +21,7 @@ npm run format     # Prettier
 app/                     páginas (App Router) + sitemap/robots
 components/ui/           componentes reutilizáveis (Button, Container, …)
 components/layout/       Header, Footer, WhatsAppFAB, CookieBanner
-components/sections/     seções de página (Hero, SpecTable, Faq, …)
+components/sections/     seções de página (Hero, SpecTable, ProductGallery, …)
 data/products.ts         fonte única dos produtos — adicionar produto = 1 objeto
 lib/constants.ts         WhatsApp, contatos, navegação (fonte única)
 public/logo/             logos oficiais · public/produtos/ fotos dos produtos
@@ -47,12 +47,12 @@ Tipografia: **Space Grotesk** (títulos) · **Inter** (corpo) · **IBM Plex Mono
 (números técnicos — assinatura visual). Cantos chanfrados (`chamfer`) ecoam o
 símbolo hexagonal da logo.
 
-## Contato — decisão comercial
+## Contato
 
-O site **não tem formulário de contato**: todo o atendimento é centralizado
-no WhatsApp (+55 19 3217-8282), com telefone e e-mail como alternativas. O
-item "Fale Conosco" do menu abre o WhatsApp direto; a página `/contato`
-existe apenas como hub simples de canais (sem campos).
+O site **não tem formulário de contato**: o atendimento é centralizado no
+WhatsApp (+55 19 3217-8282), com telefone e e-mail como alternativas. O item
+"Fale Conosco" do menu abre o WhatsApp direto; a página `/contato` é um hub
+de canais (sem campos).
 
 ## Variáveis de ambiente
 
@@ -64,31 +64,16 @@ valores reais):
 | `NEXT_PUBLIC_SITE_URL` | URL pública do site (metadata, sitemap, JSON-LD) |
 
 Nenhuma variável é obrigatória para rodar localmente — sem `.env.local`, o
-site usa o domínio provisório definido em `lib/constants.ts`.
-
-## ⚠️ Pendências antes de publicar
-
-1. **Horário de atendimento** — confirmar e ajustar `CONTACT.hours` em
-   `lib/constants.ts` (e adicionar `openingHoursSpecification` ao JSON-LD).
-2. **Domínio definitivo** — `NEXT_PUBLIC_SITE_URL` no `.env` (ver
-   `.env.example`) ou `SITE.url` em `lib/constants.ts`.
-3. **Ficha técnica em PDF** — preencher `datasheetUrl` em `data/products.ts`.
-4. **Textos marcados** — revisar todos os `[REVISAR COM O CLIENTE]` /
-   `[CONFIRMAR …]` (prazos, condições de instalação).
-5. **Garantia** — TODAS as menções de garantia/suporte do fabricante foram
-   removidas do site em 16/07/2026 (decisão comercial, para evitar
-   desacertos com clientes). Reintroduzir nas fichas e textos quando a
-   política de garantia da Agile Door estiver definida.
-6. **Políticas** — revisão jurídica das páginas de privacidade e cookies.
+site usa a URL padrão definida em `lib/constants.ts`.
 
 ## Imagens de produto
 
 Fotos oficiais em `public/produtos/` com nomes semânticos
 (`ag200-hero.png`, `ag200-galeria-2.png`, `ag200-detalhes-tecnicos.png`,
 `ag200-embalagem.png`, equivalentes `ag400-*` e `home-hero.png`). Para trocar
-uma foto, substitua o arquivo de mesmo nome — nenhum código muda. Os
-screenshots de tabela do fabricante NÃO viram imagem: os dados foram
-transcritos para `data/products.ts` e renderizam como tabela HTML responsiva.
+uma foto, substitua o arquivo de mesmo nome — nenhum código muda. As fichas
+técnicas nunca entram como imagem: os dados ficam em `data/products.ts` e
+renderizam como tabela HTML responsiva.
 
 ## Segurança
 
@@ -103,8 +88,7 @@ transcritos para `data/products.ts` e renderizam como tabela HTML responsiva.
 
 ## Deploy
 
-O projeto é **agnóstico de hospedagem** — o provedor definitivo ainda será
-confirmado pelo time da Agile Door.
+O projeto é **agnóstico de hospedagem**, sem lock-in de provedor.
 
 **Caminho padrão (recomendado):** qualquer plataforma que rode
 `next build && next start` (Node 20.9+), ex.: Vercel, Railway, VPS.

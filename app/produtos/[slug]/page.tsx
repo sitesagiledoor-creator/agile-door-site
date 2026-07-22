@@ -247,8 +247,7 @@ export default async function ProdutoPage({ params }: Props) {
         </Container>
       </section>
 
-      {/* Aplicações recomendadas — só renderiza quando o produto tem itens
-          (removida do AG200 por decisão do cliente, mantida no AG400) */}
+      {/* Aplicações recomendadas — só renderiza quando o produto tem itens */}
       {product.applications.length > 0 && (
         <section className="bg-white py-16 sm:py-20">
           <Container>

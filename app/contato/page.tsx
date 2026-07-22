@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Página de contato sem formulário — decisão comercial: todo o atendimento
- * é centralizado no WhatsApp (com telefone e e-mail como alternativas).
+ * Página de contato sem formulário: o atendimento é centralizado no
+ * WhatsApp, com telefone e e-mail como alternativas.
  */
 export default function ContatoPage() {
   return (
