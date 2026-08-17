@@ -39,7 +39,7 @@ export function Segments() {
           <SectionHeading
             eyebrow="Onde aplicar"
             title="Os contextos onde nossos operadores são especificados"
-            lead="Do hall do condomínio à entrada do hospital: os segmentos onde instaladores, arquitetos e construtoras mais aplicam o AG200 e o AG400."
+            lead="Do hall do condomínio à entrada do hospital: os segmentos onde instaladores, arquitetos e construtoras mais aplicam nossos operadores de porta de correr e telescópicos."
           />
         </Reveal>
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">

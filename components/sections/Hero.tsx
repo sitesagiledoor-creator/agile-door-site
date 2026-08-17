@@ -14,10 +14,9 @@ export function Hero() {
             Soluções em portas automáticas para seu próximo projeto
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80">
-            Operadores certificados ISO 9001, com orçamento e suporte direto
-            no WhatsApp. Por trás da marca, uma equipe que reúne mais de 30
-            anos de experiência no setor — atendendo de profissional para
-            profissional.
+            Operadores certificados ISO 9001, com orçamento e suporte direto no
+            WhatsApp. Por trás da marca, uma equipe que reúne mais de 30 anos de
+            experiência no setor — atendendo de profissional para profissional.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button href="/produtos" variant="primary" size="lg">
@@ -25,24 +24,25 @@ export function Hero() {
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </Button>
             {/* Atalhos diretos, empilhados — mais discretos que o CTA
-                principal, com altura confortável para toque */}
+                principal, com altura confortável para toque. Apontam para as
+                categorias, não para modelos: acompanham o catálogo crescendo */}
             <div className="flex flex-col gap-2">
               <Button
-                href="/produtos/ag200"
+                href="/produtos#correr"
                 variant="outline-light"
                 size="md"
                 className="min-h-11 flex-1"
               >
-                AG200
+                Portas de correr
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Button>
               <Button
-                href="/produtos/ag400"
+                href="/produtos#telescopicas"
                 variant="outline-light"
                 size="md"
                 className="min-h-11 flex-1"
               >
-                AG400
+                Telescópicas
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             </div>

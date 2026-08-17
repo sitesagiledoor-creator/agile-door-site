@@ -42,7 +42,16 @@ export type IconName =
   | "hotel"
   | "sliders"
   | "scan-line"
-  | "headphones";
+  | "headphones"
+  | "move-horizontal"
+  | "ruler"
+  | "cpu"
+  | "thermometer"
+  | "link"
+  | "lock"
+  | "plane"
+  | "flask"
+  | "shopping-bag";
 
 export type Feature = {
   icon: IconName;
@@ -55,10 +64,53 @@ export type ProductImage = {
   alt: string;
 };
 
+/**
+ * Categorias do catálogo. O rótulo é exibido como está (card, eyebrow da
+ * página de produto) e também agrupa a listagem em /produtos — por isso é um
+ * tipo fechado, e não uma string livre.
+ */
+export const CATEGORIES = [
+  "Porta de Correr Automática",
+  "Porta Telescópica Automática",
+] as const;
+
+export type Category = (typeof CATEGORIES)[number];
+
+/**
+ * Âncora e subtítulo de cada seção da listagem /produtos. `whatsappTerm` é o
+ * termo usado na mensagem pré-preenchida do WhatsApp.
+ */
+export const CATEGORY_SECTIONS: Record<
+  Category,
+  { id: string; label: string; lead: string; whatsappTerm: string }
+> = {
+  "Porta de Correr Automática": {
+    id: "correr",
+    label: "Portas de correr automáticas",
+    lead: "A folha desliza para o lado e se recolhe sobre o painel fixo. A escolha padrão quando existe parede lateral disponível para o recolhimento.",
+    whatsappTerm: "porta automática",
+  },
+  "Porta Telescópica Automática": {
+    id: "telescopicas",
+    label: "Portas telescópicas automáticas",
+    lead: "Duas folhas por lado deslizam sobrepostas e sincronizadas. Abrem o mesmo vão usando cerca de metade do espaço lateral de uma porta de correr comum.",
+    whatsappTerm: "porta telescópica",
+  },
+};
+
+/**
+ * Explicação do sistema telescópico, exibida com o diagrama 2:1 na página de
+ * produto. Só a linha telescópica tem esta seção.
+ */
+export type TelescopicSystem = {
+  title: string;
+  paragraphs: string[];
+};
+
 export type Product = {
   slug: string;
   name: string;
-  category: string;
+  category: Category;
   /** Complemento curto da categoria, ex.: "Heavy Duty" (usado no carrossel). */
   variantLabel: string;
   shortDescription: string;
@@ -67,13 +119,18 @@ export type Product = {
   badges: string[];
   /** Specs de destaque exibidas em cards/vitrines (valor em fonte mono). */
   keySpecs: { label: string; value: string }[];
-  /** Callout de destaque do motor (renderizado após a visão geral). */
-  motorHighlight: {
+  /**
+   * Callout de destaque do motor (renderizado após a visão geral).
+   * Omitido quando o fabricante não publica os dados do motor do modelo.
+   */
+  motorHighlight?: {
     title: string;
     text: string;
     specs: string;
   };
   features: Feature[];
+  /** Seção "Como funciona o sistema telescópico" — só na linha telescópica. */
+  telescopicSystem?: TelescopicSystem;
   specGroups: SpecGroup[];
   applications: Feature[];
   images: ProductImage[];
@@ -156,7 +213,11 @@ const ag200: Product = {
           value:
             "Operador de porta de correr automática, linha compacta (motor de desenho quadrado para vãos estreitos)",
         },
-        { label: "Motor", value: "Brushless DC 24V, 80W, 2800 rpm", mono: true },
+        {
+          label: "Motor",
+          value: "Brushless DC 24V, 80W, 2800 rpm",
+          mono: true,
+        },
         {
           label: "Modo de folha da porta",
           value: "Abertura simples / Abertura dupla",
@@ -268,8 +329,7 @@ const ag200: Product = {
       alt: "Itens da embalagem padrão do AG200: trilho com cobertura, controlador, motor, sensor de micro-ondas, fotocélula, controles remotos, correia, polia, suportes com design antiqueda, limitadores e parafusos",
     },
   ],
-  // PDF da ficha técnica: substituir quando a arte final estiver pronta.
-  datasheetUrl: undefined,
+  datasheetUrl: "/panfletos/AG200-Panfleto.pdf",
 };
 
 // AG400 — linha heavy duty (ficha oficial de 21/07/2026)
@@ -472,11 +532,401 @@ const ag400: Product = {
       alt: "Itens da embalagem padrão do AG400: trilho com tampa lateral, controlador, motor, sensores, fotocélula, controles remotos, correia, polia, roldanas reforçadas, limitadores e parafusos",
     },
   ],
-  // PDF da ficha técnica: substituir quando a arte final estiver pronta.
-  datasheetUrl: undefined,
+  datasheetUrl: "/panfletos/AG400-Panfleto.pdf",
 };
 
-export const products: Product[] = [ag200, ag400];
+/**
+ * Explicação do sistema telescópico — a mesma física nos dois modelos, com o
+ * fechamento citando a faixa de folha de cada um.
+ */
+function telescopicSystem(dwRange: string): TelescopicSystem {
+  return {
+    title: "Como funciona o sistema telescópico",
+    paragraphs: [
+      "Numa porta de correr comum, a folha precisa de um espaço lateral do mesmo tamanho do vão para se recolher: para abrir 2 metros livres, é preciso reservar 2 metros de painel fixo ao lado. Em fachada estreita, isso simplesmente não cabe.",
+      "Na telescópica, cada lado tem duas folhas que deslizam sobrepostas e sincronizadas. A folha de fora percorre o dobro do caminho da folha de dentro no mesmo tempo — é o sincronismo 2:1 — e as duas terminam empilhadas uma sobre a outra. Na prática, o mesmo vão livre é aberto usando cerca de metade do espaço lateral que a porta de correr comum exigiria.",
+      `São dois os cenários em que ela é a solução: entradas largas com pouca parede lateral, e vãos muito largos, em que uma folha única ficaria pesada e lenta demais. Com folhas de ${dwRange}, a composição é fechada a partir da medida real do vão — em abertura simples (as folhas correm todas para um lado) ou dupla (as folhas se abrem do centro para os dois lados).`,
+    ],
+  };
+}
+
+// AG-T200 — linha telescópica padrão. Ficha e recursos conferidos no manual
+// de instalação do fabricante (tabela "Telescopic door") em 17/08/2026.
+const agT200: Product = {
+  slug: "ag-t200",
+  name: "AG-T200",
+  category: "Porta Telescópica Automática",
+  variantLabel: "Linha Padrão",
+  shortDescription:
+    "Operador telescópico com a maior capacidade em folha dupla da linha: até 2×150 kg em abertura simples e 4×130 kg em dupla, folhas de 600 a 1500 mm, motor brushless de 100W abaixo de 40 dB e sincronismo 2:1.",
+  overview: [
+    "AG-T200: o operador telescópico para a fachada que não tem parede lateral sobrando. Duas folhas por lado deslizam sobrepostas e sincronizadas no sistema 2:1, abrindo o vão livre com cerca de metade do espaço de recolhimento que uma porta de correr comum exigiria — a saída para entradas largas em vidro, onde não há painel fixo suficiente para uma folha inteira se recolher.",
+    "É o modelo com a maior capacidade em folha dupla do catálogo telescópico: até 2×150 kg em abertura simples e até 4×130 kg em abertura dupla, com folhas de 600 a 1500 mm nas duas configurações. O motor é brushless DC de 24V e 100W (2300 rpm), com operação abaixo de 40 dB.",
+    "Na obra, velocidade de abertura e de fechamento são reguláveis de 15 a 50 cm/s e o tempo de porta aberta vai de 0 a 20 segundos. O controle é por microprocessador com autoaprendizagem na energização, ativável pelo usuário, e o ajuste dos parâmetros é manual, sem software proprietário. O conjunto reverte ao encontrar resistência na abertura e no fechamento, aceita intertravamento (inter-lock) com múltiplos sistemas de controle de acesso e tem controle dedicado para fechadura eletrônica. Alimentação AC 90–250V, 50/60 Hz, e faixa de operação de -10 °C a +70 °C.",
+  ],
+  badges: [
+    "Linha Padrão — até 4×130 kg em folha dupla",
+    "Sincronismo 2:1",
+    "Abaixo de 40 dB",
+  ],
+  keySpecs: [
+    { label: "Carga (abertura dupla)", value: "4×130 kg" },
+    { label: "Largura da folha", value: "600–1500 mm" },
+    { label: "Velocidade ajustável", value: "15–50 cm/s" },
+  ],
+  motorHighlight: {
+    title: "Motor brushless: potência sem superaquecimento",
+    text: brushlessText,
+    specs: "24V · 100W · 2300 rpm",
+  },
+  features: [
+    {
+      icon: "move-horizontal",
+      title: "Sincronismo 2:1",
+      text: "A folha de fora percorre o dobro do caminho da folha de dentro no mesmo tempo: as duas chegam juntas ao fim do curso, sem desalinhar.",
+    },
+    {
+      icon: "ruler",
+      title: "Metade do espaço lateral",
+      text: "Abre o mesmo vão livre com cerca de metade do recolhimento de uma porta de correr comum — resolve a fachada larga sem painel fixo disponível.",
+    },
+    {
+      icon: "layout-panel-top",
+      title: "A maior capacidade em folha dupla",
+      text: "Até 4×130 kg em abertura dupla e 2×150 kg em simples, com folhas de 600 a 1500 mm nas duas configurações.",
+    },
+    {
+      icon: "volume-off",
+      title: "Abaixo de 40 dB",
+      text: "Motor brushless DC de 24V, 100W e 2300 rpm, com abertura e fechamento suaves e operação abaixo de 40 dB.",
+    },
+    {
+      icon: "cpu",
+      title: "Autoaprendizagem na energização",
+      text: "O controle por microprocessador reconhece o curso da porta ao ser energizado — recurso ativável pelo usuário —, e os parâmetros são ajustados manualmente, sem software proprietário.",
+    },
+    {
+      icon: "link",
+      title: "Intertravamento e reversão",
+      text: "Aceita intertravamento (inter-lock) com múltiplos sistemas de controle de acesso, tem controle para fechadura eletrônica e reverte o movimento ao encontrar resistência.",
+    },
+  ],
+  telescopicSystem: telescopicSystem("600 a 1500 mm"),
+  specGroups: [
+    {
+      title: "Mecanismo e desempenho",
+      rows: [
+        { label: "Tipo", value: "Operador de porta telescópica automática" },
+        {
+          label: "Modo de folha da porta",
+          value:
+            "Telescópica de abertura simples / Telescópica de abertura dupla",
+        },
+        {
+          label: "Capacidade de carga",
+          value:
+            "Máx. 2×150 kg (abertura simples) / máx. 4×130 kg (abertura dupla)",
+          mono: true,
+        },
+        { label: "Largura da folha (DW)", value: "600–1500 mm", mono: true },
+        {
+          label: "Motor",
+          value: "Brushless DC 24V, 100W, 2300 rpm",
+          mono: true,
+        },
+        {
+          label: "Velocidade de abertura",
+          value: "15–50 cm/s (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Velocidade de fechamento",
+          value: "15–50 cm/s (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Tempo de permanência aberta",
+          value: "0–20 segundos (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Força de abertura manual",
+          value: "<40 N (simples) / <50 N (dupla)",
+          mono: true,
+        },
+      ],
+    },
+    {
+      title: "Controle e integração",
+      rows: [
+        {
+          label: "Controle",
+          value:
+            "Microprocessador com autoaprendizagem na energização (ativável pelo usuário) e ajuste manual dos parâmetros",
+        },
+        {
+          label: "Segurança",
+          value:
+            "Reversão ao encontrar resistência, na abertura e no fechamento",
+        },
+        {
+          label: "Integração",
+          value:
+            "Intertravamento (inter-lock) com múltiplos sistemas de controle de acesso; controle dedicado para fechadura eletrônica",
+        },
+        { label: "Sincronismo das folhas", value: "2:1", mono: true },
+      ],
+    },
+    {
+      title: "Instalação e ambiente",
+      rows: [
+        { label: "Alimentação", value: "AC 90–250V, 50/60 Hz", mono: true },
+        { label: "Nível de ruído", value: "Abaixo de 40 dB", mono: true },
+        {
+          label: "Temperatura de operação",
+          value: "-10 °C a +70 °C",
+          mono: true,
+        },
+      ],
+    },
+  ],
+  applications: [
+    {
+      icon: "stethoscope",
+      title: "Hospitais e clínicas",
+      text: "Circulações largas, com passagem de maca e equipamento, em fachadas sem parede lateral sobrando.",
+    },
+    {
+      icon: "hotel",
+      title: "Hotéis",
+      text: "Entradas principais amplas em fachada de vidro, onde não há painel fixo para recolher uma folha inteira.",
+    },
+    {
+      icon: "shopping-bag",
+      title: "Shoppings e varejo",
+      text: "Acessos largos e convidativos em lojas âncora e galerias com pouco espaço lateral.",
+    },
+    {
+      icon: "building",
+      title: "Prédios corporativos",
+      text: "Halls e recepções com vão amplo, mantendo a fachada limpa sem alargar o painel lateral.",
+    },
+  ],
+  images: [
+    {
+      src: "/produtos/ag-t200-hero.png",
+      alt: "Operador de porta telescópica automática AG-T200 em abertura dupla, com quatro folhas de vidro recolhidas em cada lado sob o cabeçote",
+    },
+    {
+      src: "/produtos/ag-t200-detalhes-tecnicos.png",
+      alt: "Vista interna do cabeçote do AG-T200 com os componentes identificados: motor, controladora, polia interna, polia externa, polia livre, correia e conectores, suportes interno e externo, placa de fixação da correia e batente",
+    },
+    {
+      src: "/produtos/ag-t200-especificacoes.png",
+      alt: "Tabela de especificações do AG-T200: modo de folha, peso e largura da folha, tensão, velocidades, tempo de abertura, força de abertura manual e temperatura de operação",
+    },
+  ],
+  datasheetUrl: "/panfletos/AG-T200-Panfleto.pdf",
+};
+
+// AG-T400 — linha telescópica premium. Ficha e recursos conferidos no manual
+// de instalação do fabricante (tabela "Telescopic door") em 17/08/2026. A
+// tabela da página de produto do fabricante traz outros números e foi
+// descartada por conflitar com o manual do mesmo modelo.
+const agT400: Product = {
+  slug: "ag-t400",
+  name: "AG-T400",
+  category: "Porta Telescópica Automática",
+  variantLabel: "Linha Premium",
+  shortDescription:
+    "Operador telescópico premium: faixa de velocidade de 10 a 55 cm/s, permanência aberta de até 60 segundos e operação a partir de -20 °C, com motor brushless de 100W abaixo de 40 dB.",
+  overview: [
+    "AG-T400: o operador telescópico para a entrada que precisa de regulagem fina. Mesmo princípio 2:1 da linha — duas folhas por lado deslizando sobrepostas, vão largo com cerca de metade do espaço lateral —, com a faixa de ajuste mais ampla do catálogo telescópico.",
+    "A velocidade vai de 10 a 55 cm/s na abertura e no fechamento, e a porta pode ficar aberta de 0 a 60 segundos — três vezes o tempo máximo do AG-T200, o que resolve carga e descarga, passagem de maca e fluxo de pico sem precisar reacionar a porta. A faixa térmica começa em -20 °C, 10 °C abaixo do restante do catálogo.",
+    "O motor é brushless DC de 24V e 100W (2300 rpm) e a operação fica abaixo de 40 dB. O controle é por microprocessador com autoaprendizagem na energização, ativável pelo usuário, e o ajuste é manual, sem software proprietário. O conjunto reverte ao encontrar resistência na abertura e no fechamento, aceita intertravamento (inter-lock) com múltiplos sistemas de controle de acesso e tem controle dedicado para fechadura eletrônica. Alimentação AC 90–240V, 50/60 Hz, e folhas de 600 a 1500 mm com até 2×150 kg em abertura simples e 4×120 kg em dupla.",
+  ],
+  badges: [
+    "Linha Premium — permanência de até 60 s",
+    "Velocidade de 10 a 55 cm/s",
+    "Opera a partir de -20 °C",
+  ],
+  keySpecs: [
+    { label: "Velocidade ajustável", value: "10–55 cm/s" },
+    { label: "Permanência aberta", value: "0–60 s" },
+    { label: "Temperatura mínima", value: "-20 °C" },
+  ],
+  motorHighlight: {
+    title: "Motor brushless: potência sem superaquecimento",
+    text: brushlessText,
+    specs: "24V · 100W · 2300 rpm",
+  },
+  features: [
+    {
+      icon: "move-horizontal",
+      title: "Sincronismo 2:1",
+      text: "A folha de fora percorre o dobro do caminho da folha de dentro no mesmo tempo: as duas chegam juntas ao fim do curso, sem desalinhar.",
+    },
+    {
+      icon: "gauge",
+      title: "A faixa de ajuste mais ampla da linha",
+      text: "Abertura e fechamento de 10 a 55 cm/s: regula tanto para o movimento lento de um acesso controlado quanto para o fluxo rápido de uma entrada cheia.",
+    },
+    {
+      icon: "sliders",
+      title: "Permanência aberta de até 60 segundos",
+      text: "Três vezes o tempo máximo do AG-T200 — resolve carga e descarga, passagem de maca e horário de pico sem reacionar a porta.",
+    },
+    {
+      icon: "thermometer",
+      title: "Opera a partir de -20 °C",
+      text: "Faixa de -20 °C a +50 °C, 10 °C abaixo do restante do catálogo no piso da escala.",
+    },
+    {
+      icon: "cpu",
+      title: "Autoaprendizagem na energização",
+      text: "O controle por microprocessador reconhece o curso da porta ao ser energizado — recurso ativável pelo usuário —, e os parâmetros são ajustados manualmente, sem software proprietário.",
+    },
+    {
+      icon: "link",
+      title: "Intertravamento e reversão",
+      text: "Aceita intertravamento (inter-lock) com múltiplos sistemas de controle de acesso, tem controle para fechadura eletrônica e reverte o movimento ao encontrar resistência.",
+    },
+  ],
+  telescopicSystem: telescopicSystem("600 a 1500 mm"),
+  specGroups: [
+    {
+      title: "Mecanismo e desempenho",
+      rows: [
+        {
+          label: "Tipo",
+          value: "Operador de porta telescópica automática, linha premium",
+        },
+        {
+          label: "Modo de folha da porta",
+          value:
+            "Telescópica de abertura simples / Telescópica de abertura dupla",
+        },
+        {
+          label: "Capacidade de carga",
+          value:
+            "Máx. 2×150 kg (abertura simples) / máx. 4×120 kg (abertura dupla)",
+          mono: true,
+        },
+        { label: "Largura da folha (DW)", value: "600–1500 mm", mono: true },
+        {
+          label: "Motor",
+          value: "Brushless DC 24V, 100W, 2300 rpm",
+          mono: true,
+        },
+        {
+          label: "Velocidade de abertura",
+          value: "10–55 cm/s (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Velocidade de fechamento",
+          value: "10–55 cm/s (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Tempo de permanência aberta",
+          value: "0–60 segundos (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Força de abertura manual",
+          value: "<40 N (simples) / <50 N (dupla)",
+          mono: true,
+        },
+      ],
+    },
+    {
+      title: "Controle e integração",
+      rows: [
+        {
+          label: "Controle",
+          value:
+            "Microprocessador com autoaprendizagem na energização (ativável pelo usuário) e ajuste manual dos parâmetros",
+        },
+        {
+          label: "Segurança",
+          value:
+            "Reversão ao encontrar resistência, na abertura e no fechamento",
+        },
+        {
+          label: "Integração",
+          value:
+            "Intertravamento (inter-lock) com múltiplos sistemas de controle de acesso; controle dedicado para fechadura eletrônica",
+        },
+        { label: "Sincronismo das folhas", value: "2:1", mono: true },
+      ],
+    },
+    {
+      title: "Instalação e ambiente",
+      rows: [
+        { label: "Alimentação", value: "AC 90–240V, 50/60 Hz", mono: true },
+        { label: "Nível de ruído", value: "Abaixo de 40 dB", mono: true },
+        {
+          label: "Temperatura de operação",
+          value: "-20 °C a +50 °C",
+          mono: true,
+        },
+        {
+          label: "Vão livre de referência",
+          value:
+            "2666 mm em 4000 mm de largura total (contra 2000 mm em porta de correr de duas folhas)",
+          mono: true,
+        },
+      ],
+    },
+  ],
+  applications: [
+    {
+      icon: "flask",
+      title: "Laboratórios e salas limpas",
+      text: "Ambientes controlados com vão largo, intertravamento entre portas e pouca parede lateral disponível.",
+    },
+    {
+      icon: "stethoscope",
+      title: "Hospitais e clínicas",
+      text: "Circulações que precisam de passagem larga e de porta aberta por mais tempo na passagem de maca.",
+    },
+    {
+      icon: "plane",
+      title: "Aeroportos e terminais",
+      text: "Acessos de alto fluxo integrados ao sistema de controle de acesso do terminal.",
+    },
+    {
+      icon: "building",
+      title: "Prédios corporativos",
+      text: "Recepções com credenciamento, em que a porta conversa com catraca e leitor de acesso.",
+    },
+  ],
+  images: [
+    {
+      src: "/produtos/ag-t400-hero.png",
+      alt: "Operador de porta telescópica automática AG-T400 em abertura dupla, com quatro folhas de vidro recolhidas em cada lado sob o cabeçote",
+    },
+    {
+      src: "/produtos/ag-t400-dimensoes.png",
+      alt: "Comparativo dimensional do AG-T400: em 4000 mm de largura total, a porta de correr de duas folhas abre 2000 mm de vão livre e a telescópica abre 2666 mm",
+    },
+    {
+      src: "/produtos/ag-t400-especificacoes.png",
+      alt: "Tabela de especificações do AG-T400: tipo e peso da folha, largura da folha, tensão, velocidades de abertura e fechamento, tempo de abertura, força de abertura manual e temperatura de operação",
+    },
+  ],
+  datasheetUrl: "/panfletos/AG-T400-Panfleto.pdf",
+};
+
+export const products: Product[] = [ag200, ag400, agT200, agT400];
+
+/** Produtos agrupados por categoria, na ordem de CATEGORIES. */
+export const productsByCategory = CATEGORIES.map((category) => ({
+  category,
+  ...CATEGORY_SECTIONS[category],
+  items: products.filter((product) => product.category === category),
+})).filter((group) => group.items.length > 0);
 
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);

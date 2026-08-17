@@ -143,10 +143,15 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs text-white/60">
-            © {new Date().getFullYear()} {SITE.name}. Todos os direitos
-            reservados.
-          </p>
+          <div>
+            <p className="text-xs text-white/60">
+              © {new Date().getFullYear()} {SITE.name}. Todos os direitos
+              reservados.
+            </p>
+            <p className="mt-1 font-mono text-xs text-white/40">
+              CNPJ {CONTACT.cnpj}
+            </p>
+          </div>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             <li>
               <Link

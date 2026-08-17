@@ -12,8 +12,8 @@ export function ProductShowcase() {
         <Reveal>
           <SectionHeading
             eyebrow="Nossos produtos"
-            title="Duas linhas, cada uma no seu lugar"
-            lead="AG200 para vãos estreitos, com tela digital de ajuste e cinco modos de função; AG400 para uso intenso, com folhas de até 200 kg. Compare as fichas e especifique com segurança."
+            title="Cada entrada tem um operador certo"
+            lead="Portas de correr automáticas — AG200 para vãos estreitos, AG400 para uso intenso — e portas telescópicas automáticas, AG-T200 e AG-T400, para entradas largas com pouco espaço lateral. Compare as fichas e especifique com segurança."
           />
         </Reveal>
 

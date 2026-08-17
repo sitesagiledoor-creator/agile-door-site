@@ -47,26 +47,26 @@ export default function SobrePage() {
               <p>
                 A Agile Door fornece portas automáticas certificadas, com
                 suporte técnico direto e ágil — da especificação ao pós-venda.
-                Nossos operadores AG200 e AG400 carregam certificações
-                internacionalmente reconhecidas: marcação CE, aprovação TÜV,
-                certificação ISO 9001 e conformidade RoHS.
+                Nossos operadores de porta de correr e de porta telescópica
+                carregam certificações internacionalmente reconhecidas: marcação
+                CE, aprovação TÜV, certificação ISO 9001 e conformidade RoHS.
               </p>
               <p>
                 Nosso cliente é profissional: serralherias e empresas de
-                esquadria, vidraçarias, construtoras, arquitetos e
-                integradores de automação. Por isso o atendimento é técnico
-                desde a primeira mensagem — quem responde no WhatsApp reúne,
-                junto com o restante da equipe, mais de 30 anos de experiência
-                no setor, e fala a língua de quem está com a obra andando:
-                medida de vão, peso de folha, prazo.
+                esquadria, vidraçarias, construtoras, arquitetos e integradores
+                de automação. Por isso o atendimento é técnico desde a primeira
+                mensagem — quem responde no WhatsApp reúne, junto com o restante
+                da equipe, mais de 30 anos de experiência no setor, e fala a
+                língua de quem está com a obra andando: medida de vão, peso de
+                folha, prazo.
               </p>
               <p>
                 A marca é nova, e preferimos dizer isso com clareza a inventar
                 números de mercado. O que não é novo é a bagagem de quem está
-                por trás dela. Nosso catálogo reúne os operadores AG200 e
-                AG400 — e vai crescer conforme validamos cada novo produto com
-                o mesmo critério de qualidade extrema no produto e no
-                atendimento.
+                por trás dela. Nosso catálogo reúne os operadores de porta de
+                correr AG200 e AG400 e os telescópicos AG-T200 e AG-T400 — e vai
+                crescer conforme validamos cada novo produto com o mesmo
+                critério de qualidade extrema no produto e no atendimento.
               </p>
             </div>
           </Reveal>

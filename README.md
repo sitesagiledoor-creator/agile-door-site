@@ -25,6 +25,7 @@ components/sections/     seções de página (Hero, SpecTable, ProductGallery, �
 data/products.ts         fonte única dos produtos — adicionar produto = 1 objeto
 lib/constants.ts         WhatsApp, contatos, navegação (fonte única)
 public/logo/             logos oficiais · public/produtos/ fotos dos produtos
+public/panfletos/        fichas técnicas em PDF (botão "Baixar Ficha Técnica")
 ```
 
 ## Design system
@@ -59,21 +60,32 @@ de canais (sem campos).
 Copie `.env.example` para `.env.local` e preencha (só nomes aqui, nunca
 valores reais):
 
-| Variável               | Uso                                            |
-| ---------------------- | ---------------------------------------------- |
+| Variável               | Uso                                              |
+| ---------------------- | ------------------------------------------------ |
 | `NEXT_PUBLIC_SITE_URL` | URL pública do site (metadata, sitemap, JSON-LD) |
 
 Nenhuma variável é obrigatória para rodar localmente — sem `.env.local`, o
 site usa a URL padrão definida em `lib/constants.ts`.
 
+## Catálogo
+
+Os produtos ficam em `data/products.ts`, agrupados por `category`. Acrescentar
+um objeto ao array `products` já gera listagem, página de detalhe, carrossel,
+sitemap, JSON-LD e o link no rodapé — nenhum outro arquivo precisa mudar. Para
+uma categoria nova, acrescente o rótulo em `CATEGORIES` e a seção
+correspondente em `CATEGORY_SECTIONS` (âncora, subtítulo e o termo usado na
+mensagem do WhatsApp).
+
 ## Imagens de produto
 
-Fotos oficiais em `public/produtos/` com nomes semânticos
+Fotos oficiais em `public/produtos/` com nomes semânticos — porta de correr
 (`ag200-hero.png`, `ag200-galeria-2.png`, `ag200-detalhes-tecnicos.png`,
-`ag200-embalagem.png`, equivalentes `ag400-*` e `home-hero.png`). Para trocar
-uma foto, substitua o arquivo de mesmo nome — nenhum código muda. As fichas
-técnicas nunca entram como imagem: os dados ficam em `data/products.ts` e
-renderizam como tabela HTML responsiva.
+`ag200-embalagem.png` e os equivalentes `ag400-*`), porta telescópica
+(`ag-t200-hero.png`, `ag-t200-detalhes-tecnicos.png`,
+`ag-t200-especificacoes.png`, `ag-t400-hero.png`, `ag-t400-dimensoes.png`) e
+`home-hero.png`. Para trocar uma foto, substitua o arquivo de mesmo nome —
+nenhum código muda. As fichas técnicas nunca entram como imagem: os dados ficam
+em `data/products.ts` e renderizam como tabela HTML responsiva.
 
 ## Segurança
 
