@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "package:static": "node scripts/empacotar-estatico.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.42.2",

@@ -13,6 +13,7 @@ npm run build      # build de produção
 npm run start      # servir o build
 npm run lint       # ESLint
 npm run format     # Prettier
+npm run package:static   # gera out/ e o .zip de entrega na Área de Trabalho
 ```
 
 ## Estrutura
@@ -26,6 +27,9 @@ data/products.ts         fonte única dos produtos — adicionar produto = 1 obj
 lib/constants.ts         WhatsApp, contatos, navegação (fonte única)
 public/logo/             logos oficiais · public/produtos/ fotos dos produtos
 public/panfletos/        fichas técnicas em PDF (botão "Baixar Ficha Técnica")
+public/clientes/         logotipos das marcas atendidas (faixa da home)
+public/.htaccess         config do Apache para o build estático
+public/LEIA-ME.txt       instruções de upload que acompanham o pacote
 ```
 
 ## Design system
@@ -102,12 +106,36 @@ em `data/products.ts` e renderizam como tabela HTML responsiva.
 
 O projeto é **agnóstico de hospedagem**, sem lock-in de provedor.
 
-**Caminho padrão (recomendado):** qualquer plataforma que rode
-`next build && next start` (Node 20.9+), ex.: Vercel, Railway, VPS.
+**Caminho padrão:** qualquer plataforma que rode `next build && next start`
+(Node 20.9+), ex.: Vercel, Railway, VPS.
 
-**Alternativa para hospedagem apenas-estática:** `npm run build:static` gera
-o site 100% estático em `out/` (sem Node.js no servidor) — como o contato é
-todo via WhatsApp/tel/mailto, não há perda de funcionalidade. Para servir em
-subpasta do domínio, use `STATIC_BASE_PATH=/subpasta`. Dica ao empacotar no
-Windows: use um compactador que grave caminhos com `/` (o `Compress-Archive`
-do PowerShell 5.1 usa `\` e quebra a extração em servidores Linux).
+**Hospedagem de arquivos estáticos** (cPanel, Hostinger, qualquer FTP):
+
+```bash
+npm run package:static
+```
+
+Gera `out/` e um `.zip` datado na Área de Trabalho, pronto para enviar à pasta
+pública do servidor. O conteúdo do zip inclui `.htaccess` e `LEIA-ME.txt`.
+
+| Variável               | Quando usar                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | domínio final ≠ `www.agiledoor.com.br` — afeta sitemap, robots, OG e JSON-LD |
+| `STATIC_BASE_PATH`     | site em subpasta do domínio (ex.: `/agile`)                                  |
+
+Dois detalhes do Windows que já custaram tempo:
+
+- No Git Bash, `STATIC_BASE_PATH=/agile` é convertido para um caminho do
+  Windows e o build falha com _"basePath has to start with a /"_. Use
+  `MSYS_NO_PATHCONV=1` antes do comando.
+- O zip precisa ter os caminhos com `/`. O `Compress-Archive` do PowerShell 5.1
+  grava `\` e a extração quebra no Linux — por isso `package:static` usa o
+  `tar.exe` do System32 (bsdtar), e não o `tar` do Git, que é o GNU e trata
+  `C:\...` como host remoto.
+
+### Cabeçalhos de segurança
+
+No modo servidor vêm de `headers()` em `next.config.ts`. No build estático essa
+API não existe, então a mesma política está em `public/.htaccess` (CSP, HSTS,
+nosniff, Referrer-Policy, Permissions-Policy) junto de compressão, cache e
+`ErrorDocument 404`. Ao mudar a política, mudar nos **dois** lugares.

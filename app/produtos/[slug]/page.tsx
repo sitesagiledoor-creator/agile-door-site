@@ -14,7 +14,12 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { CATEGORY_SECTIONS, getProduct, products } from "@/data/products";
 import { asset } from "@/lib/asset";
-import { SITE, WHATSAPP_MESSAGES, whatsappLink } from "@/lib/constants";
+import {
+  SITE,
+  WHATSAPP_MESSAGES,
+  canonicalUrl,
+  whatsappLink,
+} from "@/lib/constants";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -51,7 +56,7 @@ export default async function ProdutoPage({ params }: Props) {
     name: product.name,
     description: product.shortDescription,
     image: `${SITE.url}${product.images[0].src}`,
-    url: `${SITE.url}/produtos/${product.slug}`,
+    url: canonicalUrl(`/produtos/${product.slug}`),
     category: product.category,
     brand: { "@type": "Brand", name: SITE.name },
     additionalProperty: product.specGroups.flatMap((group) =>

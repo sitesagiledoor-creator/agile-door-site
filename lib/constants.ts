@@ -37,6 +37,17 @@ export const WHATSAPP_MESSAGES = {
     `Olá! Tenho interesse na ${productType} ${productName} e gostaria de solicitar um orçamento.`,
 } as const;
 
+/**
+ * URL canônica de uma rota. No build estático o Next usa `trailingSlash`, então
+ * a forma canônica termina em barra; no modo servidor, não. Sitemap e dados
+ * estruturados precisam declarar a mesma forma que o servidor entrega, senão
+ * apontam para um endereço que só existe depois de um redirecionamento.
+ */
+export function canonicalUrl(path: string = ""): string {
+  const barraFinal = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1" ? "/" : "";
+  return `${SITE.url}${path}${barraFinal}`;
+}
+
 /** Gera um link wa.me com a mensagem corretamente codificada. */
 export function whatsappLink(
   message: string = WHATSAPP_MESSAGES.default

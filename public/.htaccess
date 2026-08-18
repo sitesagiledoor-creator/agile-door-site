@@ -1,0 +1,58 @@
+# Agile Door — configuracao para hospedagem Apache (build estatico de out/).
+#
+# O build estatico nao aplica os cabecalhos definidos em next.config.ts, porque
+# `headers()` so existe no modo servidor. A politica abaixo reproduz a mesma
+# configuracao, para os dois modos se comportarem igual.
+#
+# Basta enviar o conteudo de out/ (incluindo este arquivo) para public_html.
+
+Options -Indexes
+ErrorDocument 404 /404.html
+
+# ---------------------------------------------------------------- HTTPS
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ------------------------------------------------- cabecalhos de seguranca
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  # HSTS so faz sentido servido sobre HTTPS
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
+</IfModule>
+
+# ---------------------------------------------------------------- compressao
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/rss+xml
+</IfModule>
+
+# ------------------------------------------------------------------- cache
+<IfModule mod_headers.c>
+  # Arquivos de /_next/static levam hash no nome: podem ficar em cache longo
+  <FilesMatch "\.(js|css|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Imagens e PDFs sao substituidos pelo mesmo nome: cache curto e revalidacao
+  <FilesMatch "\.(png|jpe?g|svg|webp|ico|pdf)$">
+    Header set Cache-Control "public, max-age=604800, must-revalidate"
+  </FilesMatch>
+  # HTML sempre revalida, senao uma atualizacao do site demora a aparecer
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ---------------------------------------------------------------- MIME types
+<IfModule mod_mime.c>
+  AddType image/svg+xml .svg
+  AddType font/woff2 .woff2
+  AddType application/manifest+json .webmanifest
+</IfModule>
