@@ -163,7 +163,7 @@ const ag200: Product = {
     "Proteção Anti-esmagamento",
   ],
   keySpecs: [
-    { label: "Capacidade de carga", value: "até 150 kg" },
+    { label: "Capacidade de carga", value: "até 200 kg" },
     { label: "Velocidade ajustável", value: "10–55 cm/s" },
     { label: "Modos de função", value: "5 modos" },
   ],
@@ -351,7 +351,7 @@ const ag400: Product = {
     "Bivolt Automático",
   ],
   keySpecs: [
-    { label: "Capacidade de carga", value: "até 200 kg" },
+    { label: "Capacidade de carga", value: "até 400 kg" },
     { label: "Velocidade ajustável", value: "10–55 cm/s" },
     { label: "Motor", value: "2300 rpm" },
   ],
