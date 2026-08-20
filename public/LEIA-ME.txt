@@ -1,0 +1,68 @@
+SITE AGILE DOOR — PACOTE PARA HOSPEDAGEM
+=========================================
+
+COMO SUBIR
+----------
+1. Descompacte este arquivo.
+2. Envie TODO o conteudo desta pasta para a pasta publica do servidor
+   (geralmente public_html, htdocs ou www).
+3. Envie tambem o arquivo .htaccess — ele fica oculto em alguns programas de
+   FTP, ative "mostrar arquivos ocultos". Sem ele o site funciona, mas perde
+   os cabecalhos de seguranca, a pagina de erro 404 e a compressao.
+
+Nao e preciso Node.js, banco de dados nem painel. Sao arquivos estaticos.
+
+
+ANTES DE PUBLICAR — CONFIRA O DOMINIO
+--------------------------------------
+Este pacote foi gerado para o dominio:
+
+    https://www.agiledoor.com.br
+
+Esse endereco esta gravado no sitemap.xml, no robots.txt, nas tags de
+compartilhamento (WhatsApp/Facebook) e nos dados estruturados do Google.
+
+Se o dominio final for OUTRO, gere o pacote de novo:
+
+    NEXT_PUBLIC_SITE_URL=https://seudominio.com.br npm run build:static
+
+O site funciona normalmente com o dominio errado — o que quebra e a previa ao
+compartilhar link e a indexacao no Google.
+
+
+PARA HOSPEDAR EM SUBPASTA
+--------------------------
+Se o site nao ficar na raiz do dominio, e sim em algo como
+seudominio.com.br/agile:
+
+    STATIC_BASE_PATH=/agile npm run build:static
+
+No Windows, dentro do Git Bash, coloque MSYS_NO_PATHCONV=1 antes do comando —
+senao o Git converte /agile num caminho do Windows e o build falha.
+
+
+O QUE TEM AQUI
+--------------
+index.html ................. pagina inicial
+produtos/ .................. catalogo e as 4 paginas de produto
+sobre/, contato/, blog/ .... demais paginas
+politica-de-*/ ............. politicas de privacidade e cookies
+panfletos/ ................. fichas tecnicas em PDF dos 4 produtos
+produtos/*.png ............. fotos dos produtos
+clientes/ .................. logotipos das marcas atendidas
+logo/ ...................... logotipos da Agile Door
+_next/ ..................... css e javascript do site (nao mexer)
+sitemap.xml, robots.txt .... para o Google
+404.html ................... pagina de erro
+.htaccess .................. seguranca, cache e compressao (Apache)
+
+
+TROCAR UMA FOTO DEPOIS
+-----------------------
+Substituir o arquivo de mesmo nome dentro de produtos/ ja resolve — nenhum
+outro arquivo precisa mudar.
+
+
+CODIGO-FONTE
+------------
+https://github.com/sitesagiledoor-creator/agile-door-site

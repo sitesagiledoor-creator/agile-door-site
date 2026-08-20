@@ -13,6 +13,8 @@ export const SITE = {
 export const WHATSAPP_NUMBER = "551932178282";
 
 export const CONTACT = {
+  /** CNPJ formatado para exibição no rodapé */
+  cnpj: "67.704.292/0001-14",
   email: "contato@agiledoor.com.br",
   emailHref: "mailto:contato@agiledoor.com.br",
   /** Telefone formatado para leitura */
@@ -27,9 +29,24 @@ export const CONTACT = {
 export const WHATSAPP_MESSAGES = {
   default:
     "Olá! Gostaria de saber mais sobre as portas automáticas da Agile Door.",
-  product: (productName: string) =>
-    `Olá! Tenho interesse na porta automática ${productName} e gostaria de solicitar um orçamento.`,
+  /**
+   * `productType` acompanha a categoria do produto ("porta telescópica" na
+   * linha telescópica), para a mensagem já chegar com o tipo certo.
+   */
+  product: (productName: string, productType = "porta automática") =>
+    `Olá! Tenho interesse na ${productType} ${productName} e gostaria de solicitar um orçamento.`,
 } as const;
+
+/**
+ * URL canônica de uma rota. No build estático o Next usa `trailingSlash`, então
+ * a forma canônica termina em barra; no modo servidor, não. Sitemap e dados
+ * estruturados precisam declarar a mesma forma que o servidor entrega, senão
+ * apontam para um endereço que só existe depois de um redirecionamento.
+ */
+export function canonicalUrl(path: string = ""): string {
+  const barraFinal = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1" ? "/" : "";
+  return `${SITE.url}${path}${barraFinal}`;
+}
 
 /** Gera um link wa.me com a mensagem corretamente codificada. */
 export function whatsappLink(

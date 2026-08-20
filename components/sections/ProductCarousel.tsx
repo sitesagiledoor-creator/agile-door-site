@@ -16,9 +16,9 @@ import { Button } from "@/components/ui/Button";
  * (scroll-snap), setas do teclado quando a trilha está focada e
  * prefers-reduced-motion respeitado (rolagem sem animação).
  *
- * autoPlay: desligado por padrão — com só 2 produtos a alternância fica
- * repetitiva. Quando o catálogo tiver 3+, basta passar autoPlay na Home;
- * ele pausa em hover/foco/toque e não roda com prefers-reduced-motion.
+ * autoPlay: desligado por padrão — quem controla o ritmo é o visitante.
+ * Para ligar, basta passar autoPlay na Home; ele pausa em hover/foco/toque
+ * e não roda com prefers-reduced-motion.
  */
 export function ProductCarousel({
   products,
@@ -191,7 +191,11 @@ export function ProductCarousel({
           <ChevronLeft className="h-5 w-5" aria-hidden="true" />
         </button>
 
-        <div className="flex items-center gap-2.5" role="tablist" aria-label="Escolher produto exibido">
+        <div
+          className="flex items-center gap-2.5"
+          role="tablist"
+          aria-label="Escolher produto exibido"
+        >
           {products.map((product, dotIndex) => (
             <button
               key={product.slug}

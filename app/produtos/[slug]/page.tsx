@@ -6,13 +6,20 @@ import { ProductCard } from "@/components/sections/ProductCard";
 import { ProductGallery } from "@/components/sections/ProductGallery";
 import { Reveal } from "@/components/sections/Reveal";
 import { SpecTable } from "@/components/sections/SpecTable";
+import { TelescopicSystem } from "@/components/sections/TelescopicSystem";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ProductIcon } from "@/components/ui/ProductIcons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { getProduct, products } from "@/data/products";
-import { SITE, WHATSAPP_MESSAGES, whatsappLink } from "@/lib/constants";
+import { CATEGORY_SECTIONS, getProduct, products } from "@/data/products";
+import { asset } from "@/lib/asset";
+import {
+  SITE,
+  WHATSAPP_MESSAGES,
+  canonicalUrl,
+  whatsappLink,
+} from "@/lib/constants";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -49,7 +56,7 @@ export default async function ProdutoPage({ params }: Props) {
     name: product.name,
     description: product.shortDescription,
     image: `${SITE.url}${product.images[0].src}`,
-    url: `${SITE.url}/produtos/${product.slug}`,
+    url: canonicalUrl(`/produtos/${product.slug}`),
     category: product.category,
     brand: { "@type": "Brand", name: SITE.name },
     additionalProperty: product.specGroups.flatMap((group) =>
@@ -62,6 +69,10 @@ export default async function ProdutoPage({ params }: Props) {
   };
 
   const relatedProducts = products.filter((p) => p.slug !== product.slug);
+  const whatsappMessage = WHATSAPP_MESSAGES.product(
+    product.name,
+    CATEGORY_SECTIONS[product.category].whatsappTerm
+  );
 
   return (
     <>
@@ -123,7 +134,7 @@ export default async function ProdutoPage({ params }: Props) {
                   cortaria o ::before do efeito. Mesma classe do FAB. */}
               <span className="whatsapp-pulse inline-flex rounded-lg">
                 <Button
-                  href={whatsappLink(WHATSAPP_MESSAGES.product(product.name))}
+                  href={whatsappLink(whatsappMessage)}
                   external
                   variant="whatsapp"
                   size="lg"
@@ -135,7 +146,7 @@ export default async function ProdutoPage({ params }: Props) {
               </span>
               {product.datasheetUrl ? (
                 <Button
-                  href={product.datasheetUrl}
+                  href={asset(product.datasheetUrl)}
                   external
                   variant="outline"
                   size="lg"
@@ -175,27 +186,30 @@ export default async function ProdutoPage({ params }: Props) {
           </Reveal>
 
           {/* Destaque do motor brushless — callout próprio, não diluído
-              na grade de diferenciais */}
-          <Reveal delay={0.1}>
-            <aside className="mt-10 border-l-4 border-brand-orange bg-brand-navy-dark p-6 chamfer sm:p-8">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center bg-brand-orange text-brand-navy-dark chamfer-sm">
-                  <Fan className="h-7 w-7" aria-hidden="true" />
-                </span>
-                <div>
-                  <p className="font-display text-xl font-bold text-white">
-                    {product.motorHighlight.title}
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-white/80">
-                    {product.motorHighlight.text}
-                  </p>
-                  <p className="mt-3 font-mono text-lg font-semibold text-brand-orange-light">
-                    {product.motorHighlight.specs}
-                  </p>
+              na grade de diferenciais. Só aparece quando o fabricante publica
+              os dados do motor do modelo. */}
+          {product.motorHighlight && (
+            <Reveal delay={0.1}>
+              <aside className="mt-10 border-l-4 border-brand-orange bg-brand-navy-dark p-6 chamfer sm:p-8">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center bg-brand-orange text-brand-navy-dark chamfer-sm">
+                    <Fan className="h-7 w-7" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="font-display text-xl font-bold text-white">
+                      {product.motorHighlight.title}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/80">
+                      {product.motorHighlight.text}
+                    </p>
+                    <p className="mt-3 font-mono text-lg font-semibold text-brand-orange-light">
+                      {product.motorHighlight.specs}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </aside>
-          </Reveal>
+              </aside>
+            </Reveal>
+          )}
         </Container>
       </section>
 
@@ -205,7 +219,12 @@ export default async function ProdutoPage({ params }: Props) {
           <Reveal>
             <SectionHeading
               eyebrow="Diferenciais"
-              title="Motor e controlador garantem:"
+              // Sem dados de motor publicados, o título não promete motor.
+              title={
+                product.motorHighlight
+                  ? "Motor e controlador garantem:"
+                  : "Mecanismo e controlador garantem:"
+              }
             />
           </Reveal>
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -228,6 +247,14 @@ export default async function ProdutoPage({ params }: Props) {
           </ul>
         </Container>
       </section>
+
+      {/* Como funciona o sistema telescópico — exclusivo da linha telescópica */}
+      {product.telescopicSystem && (
+        <TelescopicSystem
+          data={product.telescopicSystem}
+          productName={product.name}
+        />
+      )}
 
       {/* Ficha técnica */}
       <section
@@ -303,7 +330,7 @@ export default async function ProdutoPage({ params }: Props) {
       <FinalCta
         title={`Pronto para instalar o ${product.name}?`}
         text="Envie as medidas do vão e uma foto da entrada pelo WhatsApp: retornamos com compatibilidade confirmada e orçamento."
-        whatsappMessage={WHATSAPP_MESSAGES.product(product.name)}
+        whatsappMessage={whatsappMessage}
       />
     </>
   );

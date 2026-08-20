@@ -35,6 +35,14 @@ yarn-error.log*
 .env*
 !.env.example
 
+# dados de terceiros (planilhas de leads, exportações de contatos)
+# ESTE REPOSITÓRIO É PÚBLICO — nada com nome, telefone ou endereço de pessoa
+# ou empresa pode entrar aqui, nem para teste.
+*.xlsx
+*.xls
+*.xlsm
+*.csv
+
 # configuração local de ferramentas (caminhos absolutos da máquina)
 .claude/
 CLAUDE.local.md
