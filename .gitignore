@@ -16,6 +16,9 @@
 # next.js
 /.next/
 /out/
+# pasta onde o pacote de hospedagem e extraido para teste
+# (referenciada em .claude/launch.json; e build, nao codigo)
+/.teste-pacote/
 
 # production
 /build
