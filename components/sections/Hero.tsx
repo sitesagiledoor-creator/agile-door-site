@@ -25,13 +25,16 @@ export function Hero() {
             </Button>
             {/* Atalhos diretos, empilhados — mais discretos que o CTA
                 principal, com altura confortável para toque. Apontam para as
-                categorias, não para modelos: acompanham o catálogo crescendo */}
-            <div className="flex flex-col gap-2">
+                categorias, não para modelos: acompanham o catálogo crescendo.
+                Com três, a altura individual encolhe no desktop para a coluna
+                não crescer e desequilibrar o hero; no celular cada um mantém
+                48px de alvo de toque. */}
+            <div className="flex flex-col gap-2 sm:gap-1.5">
               <Button
                 href="/produtos#correr"
                 variant="outline-light"
                 size="md"
-                className="min-h-11 flex-1"
+                className="min-h-12 flex-1 sm:min-h-0 sm:py-1.5"
               >
                 Portas de correr
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -40,9 +43,19 @@ export function Hero() {
                 href="/produtos#telescopicas"
                 variant="outline-light"
                 size="md"
-                className="min-h-11 flex-1"
+                className="min-h-12 flex-1 sm:min-h-0 sm:py-1.5"
               >
                 Telescópicas
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Button>
+              <Button
+                href="/produtos#antipanico"
+                variant="outline-light"
+                size="md"
+                className="min-h-12 flex-1 sm:min-h-0 sm:py-1.5"
+                title="Portas antipânico para rota de fuga"
+              >
+                Antipânico
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             </div>

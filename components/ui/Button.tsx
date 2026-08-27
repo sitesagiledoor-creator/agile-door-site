@@ -37,6 +37,12 @@ type CommonProps = {
   variant?: Variant;
   size?: Size;
   className?: string;
+  /**
+   * Nome por extenso, para quando o rótulo visível precisa ser curto.
+   * Vira `title` e `aria-label`: aparece no hover e é o que o leitor de tela
+   * anuncia no lugar do texto abreviado.
+   */
+  title?: string;
   children: React.ReactNode;
 };
 
@@ -67,13 +73,20 @@ export function Button(props: ButtonAsLink | ButtonAsButton) {
           target="_blank"
           rel="noopener noreferrer"
           className={classes}
+          title={props.title}
+          aria-label={props.title}
         >
           {props.children}
         </a>
       );
     }
     return (
-      <Link href={props.href} className={classes}>
+      <Link
+        href={props.href}
+        className={classes}
+        title={props.title}
+        aria-label={props.title}
+      >
         {props.children}
       </Link>
     );
