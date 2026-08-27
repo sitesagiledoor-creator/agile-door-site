@@ -104,6 +104,14 @@ em `data/products.ts` e renderizam como tabela HTML responsiva.
 
 ## Deploy
 
+**Endereço oficial: `https://www.agiledoor.com.br`** — com `www`, confirmado em
+27/08/2026. É o que está gravado no sitemap, no robots, nas tags de
+compartilhamento e no JSON-LD. O `public/.htaccess` redireciona
+`agiledoor.com.br` para o `www` em um salto só, então basta apontar os dois no
+DNS. Se um dia o oficial passar a ser o endereço sem `www`, três coisas mudam
+juntas: a regra do `.htaccess`, o `NEXT_PUBLIC_SITE_URL` do build e os QR codes
+dos panfletos.
+
 O projeto é **agnóstico de hospedagem**, sem lock-in de provedor.
 
 **Caminho padrão:** qualquer plataforma que rode `next build && next start`
@@ -116,7 +124,21 @@ npm run package:static
 ```
 
 Gera `out/` e um `.zip` datado na Área de Trabalho, pronto para enviar à pasta
-pública do servidor. O conteúdo do zip inclui `.htaccess` e `LEIA-ME.txt`.
+pública do servidor (`public_html`, `htdocs` ou `www`). O conteúdo do zip inclui
+`.htaccess` e `LEIA-ME.txt`. Envie o `.htaccess` junto — programas de FTP costumam
+escondê-lo, e é ele que leva os cabeçalhos de segurança, o redirecionamento do
+domínio e a página de erro.
+
+⚠️ **Esse comando só funciona no PowerShell.** No Git Bash o script não encontra
+o `npm.cmd` e termina sem mensagem. Pelo Git Bash, o caminho é:
+
+```bash
+npm run build:static
+/c/Windows/System32/tar.exe -a -c -f site.zip -C out .
+```
+
+O `tar.exe` do System32 é o bsdtar, que grava os caminhos com `/`. O `tar` do
+PATH costuma ser o do Git (GNU), que não cria zip e lê `C:\...` como host remoto.
 
 | Variável               | Quando usar                                                                  |
 | ---------------------- | ---------------------------------------------------------------------------- |
