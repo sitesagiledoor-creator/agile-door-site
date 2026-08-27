@@ -9,9 +9,23 @@
 Options -Indexes
 ErrorDocument 404 /404.html
 
-# ---------------------------------------------------------------- HTTPS
+# ------------------------------------------------- endereco oficial e HTTPS
+# O endereco oficial e https://www.agiledoor.com.br — e o que esta gravado no
+# sitemap, no robots, nas tags de compartilhamento e nos QR codes dos
+# panfletos. Sem a regra do www, o site responderia nos dois enderecos e o
+# Google indexaria o mesmo conteudo duas vezes.
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # sem www -> www, ja em https (um salto so). As excecoes deixam o pacote
+  # continuar testavel em localhost e por IP.
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteCond %{HTTP_HOST} !^localhost [NC]
+  RewriteCond %{HTTP_HOST} !^[0-9.]+$
+  RewriteCond %{HTTP_HOST} !^$
+  RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # ja com www, mas ainda em http
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
