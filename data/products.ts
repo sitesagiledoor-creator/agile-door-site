@@ -51,7 +51,15 @@ export type IconName =
   | "lock"
   | "plane"
   | "flask"
-  | "shopping-bag";
+  | "shopping-bag"
+  | "door-open"
+  | "flame"
+  | "zap-off"
+  | "hand"
+  | "users"
+  | "siren"
+  | "school"
+  | "theater";
 
 export type Feature = {
   icon: IconName;
@@ -72,6 +80,7 @@ export type ProductImage = {
 export const CATEGORIES = [
   "Porta de Correr Automática",
   "Porta Telescópica Automática",
+  "Porta Antipânico / Rota de Fuga",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
@@ -96,6 +105,12 @@ export const CATEGORY_SECTIONS: Record<
     lead: "Duas folhas por lado deslizam sobrepostas e sincronizadas. Abrem o mesmo vão usando cerca de metade do espaço lateral de uma porta de correr comum.",
     whatsappTerm: "porta telescópica",
   },
+  "Porta Antipânico / Rota de Fuga": {
+    id: "antipanico",
+    label: "Portas antipânico para rota de fuga",
+    lead: "Entrada automática no dia a dia que, sob pressão manual no sentido da saída, gira para fora e libera o vão inteiro — sem depender de energia. Para quem precisa que a entrada também sirva de saída de emergência.",
+    whatsappTerm: "",
+  },
 };
 
 /**
@@ -107,9 +122,68 @@ export type TelescopicSystem = {
   paragraphs: string[];
 };
 
+/**
+ * Certificações e classificações do produto, centralizadas aqui de propósito:
+ * a ficha técnica é gerada a partir deste campo (ver `complianceGroup`), então
+ * publicar uma classificação nova é editar dado, não reescrever página.
+ *
+ * `fireRating` fica vazio enquanto não houver laudo de ensaio de resistência
+ * ao fogo emitido por laboratório acreditado. Sem laudo, a classificação é
+ * classe de produto regulada e não pode ser afirmada.
+ */
+export type Certifications = {
+  /** Selos do mecanismo, exibidos na ficha e no badge do hero. */
+  seals: string[];
+  /** Ciclo de vida declarado pelo fabricante. */
+  lifecycle?: string;
+  /** Classificação de resistência ao fogo — só com laudo em mãos. */
+  fireRating?: string;
+};
+
+/** Política de garantia do produto, exibida na ficha técnica. */
+export type Warranty = {
+  term: string;
+  /** Complemento opcional, ex.: prazo de suporte pós-venda. */
+  support?: string;
+};
+
+/**
+ * Seção "Como funciona o antipânico": os dois modos de operação da mesma
+ * porta, com o diagrama em planta. Só a linha antipânico tem esta seção.
+ */
+export type EmergencySystem = {
+  title: string;
+  paragraphs: string[];
+  modes: { icon: IconName; title: string; text: string }[];
+};
+
+/** Bloco de destaque da função de proteção contra incêndio. */
+export type FireProtection = {
+  title: string;
+  lead: string;
+  points: { icon: IconName; title: string; text: string }[];
+};
+
+/**
+ * Contexto normativo. Descreve a exigência que existe no projeto e encaminha
+ * o enquadramento ao responsável técnico — a conformidade é do projeto e da
+ * instalação, nunca do equipamento isolado.
+ */
+export type RegulatoryContext = {
+  title: string;
+  paragraphs: string[];
+  note: string;
+};
+
 export type Product = {
   slug: string;
   name: string;
+  /**
+   * Nome curto para títulos de seção e rótulos de botão, quando o nome
+   * comercial é longo demais para caber na frase. O nome completo
+   * continua no h1, na metadata e na mensagem do WhatsApp.
+   */
+  shortName?: string;
   category: Category;
   /** Complemento curto da categoria, ex.: "Heavy Duty" (usado no carrossel). */
   variantLabel: string;
@@ -131,6 +205,14 @@ export type Product = {
   features: Feature[];
   /** Seção "Como funciona o sistema telescópico" — só na linha telescópica. */
   telescopicSystem?: TelescopicSystem;
+  /** Seção "Como funciona o antipânico" — só na linha antipânico. */
+  emergencySystem?: EmergencySystem;
+  /** Bloco de proteção contra incêndio — só na linha antipânico. */
+  fireProtection?: FireProtection;
+  /** Bloco de contexto normativo — só na linha antipânico. */
+  regulatoryContext?: RegulatoryContext;
+  certifications: Certifications;
+  warranty: Warranty;
   specGroups: SpecGroup[];
   applications: Feature[];
   images: ProductImage[];
@@ -204,6 +286,11 @@ const ag200: Product = {
       text: "Compatível com fechadura eletrônica, teclado de acesso, leitor biométrico, controle remoto, botoeira, sensor de segurança e alarme de incêndio.",
     },
   ],
+  certifications: {
+    seals: ["CE", "TÜV", "ISO 9001", "RoHS"],
+    lifecycle: "2 milhões de ciclos garantidos (aprovado pelo TÜV)",
+  },
+  warranty: { term: "12 meses" },
   specGroups: [
     {
       title: "Motor e desempenho",
@@ -294,20 +381,6 @@ const ag200: Product = {
         },
       ],
     },
-    {
-      title: "Certificações",
-      rows: [
-        {
-          label: "Certificações do mecanismo",
-          value: "CE, TÜV, ISO 9001, RoHS",
-        },
-        {
-          label: "Ciclo de vida",
-          value: "2 milhões de operações (aprovado pelo TÜV)",
-          mono: true,
-        },
-      ],
-    },
   ],
   // A seção de aplicações só é renderizada quando o array tem itens.
   applications: [],
@@ -392,6 +465,11 @@ const ag400: Product = {
       text: "Mecanismo com marcação CE, aprovação TÜV, ISO 9001 e RoHS, com ciclo de vida de 2 milhões de operações.",
     },
   ],
+  certifications: {
+    seals: ["CE", "TÜV", "ISO 9001", "RoHS"],
+    lifecycle: "2 milhões de ciclos garantidos (aprovado pelo TÜV)",
+  },
+  warranty: { term: "12 meses" },
   specGroups: [
     {
       title: "Motor e desempenho",
@@ -474,20 +552,6 @@ const ag400: Product = {
         {
           label: "Controlador",
           value: "Mantém a configuração após queda de energia",
-        },
-      ],
-    },
-    {
-      title: "Certificações",
-      rows: [
-        {
-          label: "Certificações do mecanismo",
-          value: "CE, TÜV, ISO 9001, RoHS",
-        },
-        {
-          label: "Ciclo de vida",
-          value: "2 milhões de operações (aprovado pelo TÜV)",
-          mono: true,
         },
       ],
     },
@@ -612,6 +676,8 @@ const agT200: Product = {
     },
   ],
   telescopicSystem: telescopicSystem("600 a 1500 mm"),
+  certifications: { seals: [] },
+  warranty: { term: "12 meses" },
   specGroups: [
     {
       title: "Mecanismo e desempenho",
@@ -793,6 +859,8 @@ const agT400: Product = {
     },
   ],
   telescopicSystem: telescopicSystem("600 a 1500 mm"),
+  certifications: { seals: [] },
+  warranty: { term: "12 meses" },
   specGroups: [
     {
       title: "Mecanismo e desempenho",
@@ -919,7 +987,295 @@ const agT400: Product = {
   datasheetUrl: "/panfletos/AG-T400-Panfleto.pdf",
 };
 
-export const products: Product[] = [ag200, ag400, agT200, agT400];
+// Porta de Correr Antipânico Total — categoria própria: o critério de escolha
+// do cliente é exigência de projeto (rota de fuga), não conveniência de fluxo.
+// Ficha oficial do fabricante de 27/08/2026. Nível de ruído e força de
+// acionamento do antipânico não são publicados para este modelo: ficam fora
+// da tabela em vez de herdarem número de outro produto.
+const antipanicoTotal: Product = {
+  slug: "antipanico-total",
+  name: "Porta de Correr Antipânico Total",
+  shortName: "Antipânico Total",
+  category: "Porta Antipânico / Rota de Fuga",
+  variantLabel: "",
+  shortDescription:
+    "Entrada automática que também é rota de fuga: sob pressão manual no sentido da saída, as folhas giram para fora como portas de abrir e liberam o vão inteiro — sem depender de energia elétrica.",
+  overview: [
+    "Numa rota de fuga, a porta de correr comum é um risco conhecido: se falta energia ou o sistema trava, ela deixa de abrir e vira parede. A Porta de Correr Antipânico Total resolve isso por mecânica, não por eletrônica — as folhas móveis e os painéis fixos laterais são montados sobre eixos com travamento que se libera sob pressão manual no sentido da saída. Empurrou, abriu.",
+    "No dia a dia ela é uma entrada automática como qualquer outra: sensor de presença, integração com controle de acesso, folhas de até 200 kg (ou 2×180 kg em abertura dupla) e largura de folha de 500 a 2000 mm. Em emergência, muda de comportamento sem depender de comando eletrônico, de chave ou de alguém treinado por perto.",
+    "As velocidades de abertura e de fechamento vão de 20 a 60 cm/s e a permanência aberta chega a 60 segundos, ajustáveis conforme o fluxo de pessoas previsto no projeto — em evacuação, é o que define quantas pessoas atravessam o vão por minuto. O dimensionamento é sob medida, a partir do vão real. Mecanismo com marcação CE, ISO 9001 e RoHS.",
+  ],
+  badges: ["Rota de fuga", "Abertura sem energia", "Vão total liberado"],
+  keySpecs: [
+    { label: "Capacidade de carga", value: "até 200 kg" },
+    { label: "Velocidade ajustável", value: "20–60 cm/s" },
+    { label: "Permanência aberta", value: "0–60 s" },
+  ],
+  motorHighlight: {
+    title: "Motor brushless DC de 24V",
+    text: brushlessText,
+    specs: "24V · 100W · 3600 rpm",
+  },
+  emergencySystem: {
+    title: "Uma porta, dois modos de operação",
+    paragraphs: [
+      "A mesma folha que desliza o dia inteiro como porta automática é a folha que gira para fora na emergência. Não são dois equipamentos, nem uma porta de correr com uma porta de emergência ao lado: é uma entrada só, que muda de comportamento quando alguém empurra no sentido da saída.",
+      "O travamento que segura a folha no eixo cede sob pressão manual. Como o acionamento é mecânico, ele não depende da rede elétrica, do controlador nem de qualquer comando — funciona com a instalação desenergizada. Os painéis fixos laterais giram junto, e é isso que libera a largura total do vão, e não apenas a passagem das folhas móveis.",
+      "Terminada a emergência, as folhas voltam à posição e a porta retoma a operação automática normal.",
+    ],
+    modes: [
+      {
+        icon: "move-horizontal",
+        title: "Modo normal — entrada automática",
+        text: "As folhas deslizam sobre o trilho, comandadas por sensor de presença. Aceita integração com controle de acesso, e as velocidades e o tempo de permanência aberta são ajustáveis conforme o fluxo.",
+      },
+      {
+        icon: "door-open",
+        title: "Modo emergência — abertura manual",
+        text: "Pressão manual no sentido da saída libera o travamento e as folhas giram para fora, junto com os painéis fixos. O vão fica inteiramente livre, sem energia e sem comando eletrônico.",
+      },
+    ],
+  },
+  fireProtection: {
+    title: "Função de proteção contra incêndio",
+    lead: "É para o pior cenário que este produto existe: prédio às escuras, sistema sem energia, muita gente se deslocando ao mesmo tempo para a saída. A abertura antipânico foi projetada exatamente para esse momento.",
+    points: [
+      {
+        icon: "zap-off",
+        title: "Abre sem energia elétrica",
+        text: "O acionamento é mecânico. Queda de energia, controlador desligado ou instalação desenergizada não impedem a abertura no sentido da fuga.",
+      },
+      {
+        icon: "layout-panel-top",
+        title: "Libera o vão total",
+        text: "As folhas móveis e os painéis fixos laterais giram para fora. A largura útil de fuga passa a ser a do vão inteiro, não só a das folhas.",
+      },
+      {
+        icon: "siren",
+        title: "Projetada para rota de fuga",
+        text: "Concebida para saídas de emergência e rotas de evacuação, com velocidades de 20 a 60 cm/s e permanência aberta de até 60 segundos ajustáveis ao fluxo de pessoas do projeto.",
+      },
+    ],
+  },
+  regulatoryContext: {
+    title: "Quando o projeto exige abertura antipânico",
+    paragraphs: [
+      "Em rotas de fuga com público acima de 200 pessoas, a legislação de segurança contra incêndio exige que portas de correr permitam abertura antipânico ou automática no sentido da saída. A exigência específica varia conforme a ocupação e a Instrução Técnica do Corpo de Bombeiros de cada estado — o responsável técnico do projeto define o enquadramento.",
+      "Na prática, é a pendência que aparece na análise do projeto ou na vistoria: a entrada principal já existe, é de correr, e precisa passar a funcionar também como saída de emergência. Trocar o operador por um conjunto antipânico resolve isso sem abrir uma segunda porta na fachada.",
+    ],
+    note: "A Agile Door fornece o equipamento. O enquadramento normativo e a execução em obra são do responsável técnico do projeto e de quem instala.",
+  },
+  features: [
+    {
+      icon: "door-open",
+      title: "Empurrou, abriu",
+      text: "Sob pressão manual no sentido da saída, o travamento libera e a folha gira para fora como uma porta de abrir.",
+    },
+    {
+      icon: "zap-off",
+      title: "Independente de energia",
+      text: "O acionamento do antipânico é mecânico: não depende da rede elétrica, do controlador nem de ninguém achar uma chave.",
+    },
+    {
+      icon: "layout-panel-top",
+      title: "Vão inteiro liberado",
+      text: "Os painéis fixos laterais também giram, ampliando a largura útil de fuga além da passagem das folhas móveis.",
+    },
+    {
+      icon: "gauge",
+      title: "Ajuste para o fluxo do projeto",
+      text: "Velocidades de 20 a 60 cm/s e permanência aberta de 0 a 60 segundos: em evacuação, é o que define quantas pessoas passam por minuto.",
+    },
+    {
+      icon: "hand",
+      title: "Entrada automática no dia a dia",
+      text: "Fora da emergência é uma porta de correr automática comum, com sensor de presença e integração a controle de acesso.",
+    },
+    {
+      icon: "shield-check",
+      title: "Certificação e ciclo de vida",
+      text: "Mecanismo com marcação CE, ISO 9001 e RoHS, com 2 milhões de ciclos garantidos.",
+    },
+  ],
+  certifications: {
+    seals: ["CE", "ISO 9001", "RoHS"],
+    lifecycle: "2 milhões de ciclos garantidos",
+    // fireRating: preencher SOMENTE com laudo de ensaio de resistência ao fogo
+    // emitido por laboratório acreditado. Sem laudo, a classificação não pode
+    // ser afirmada — a linha da ficha sai deste campo, sem mexer na página.
+  },
+  warranty: { term: "12 meses" },
+  specGroups: [
+    {
+      title: "Operação e capacidade",
+      rows: [
+        {
+          label: "Tipo",
+          value: "Porta de correr automática com sistema antipânico",
+        },
+        {
+          label: "Modo de operação",
+          value: "Correr automático + abertura manual de emergência",
+        },
+        { label: "Modo de folha", value: "Abertura simples / abertura dupla" },
+        {
+          label: "Capacidade de carga",
+          value: "Até 200 kg (folha simples) / até 2×180 kg (folha dupla)",
+          mono: true,
+        },
+        { label: "Largura da folha (DW)", value: "500–2000 mm", mono: true },
+        {
+          label: "Dimensionamento",
+          value: "Sob medida, conforme o vão do projeto",
+        },
+      ],
+    },
+    {
+      title: "Motor e desempenho",
+      rows: [
+        {
+          label: "Motor",
+          value: "Brushless DC 24V, 100W, 3600 rpm",
+          mono: true,
+        },
+        {
+          label: "Velocidade de abertura",
+          value: "20–60 cm/s (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Velocidade de fechamento",
+          value: "20–60 cm/s (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Tempo de permanência aberta",
+          value: "0–60 segundos (ajustável)",
+          mono: true,
+        },
+        {
+          label: "Alimentação",
+          value: "AC 100–240V, 50/60 Hz (bivolt automático)",
+          mono: true,
+        },
+      ],
+    },
+    {
+      title: "Instalação e ambiente",
+      rows: [
+        {
+          label: "Temperatura de operação",
+          value: "-10 °C a +70 °C",
+          mono: true,
+        },
+        { label: "Material do gabinete", value: "Alumínio, acabamento prata" },
+        { label: "Função de proteção contra incêndio", value: "Sim" },
+      ],
+    },
+  ],
+  applications: [
+    {
+      icon: "shopping-bag",
+      title: "Shoppings e lojas de rua",
+      text: "Entradas de público alto, em que a rota de fuga passa pela porta principal.",
+    },
+    {
+      icon: "stethoscope",
+      title: "Hospitais e clínicas",
+      text: "Circulação contínua e evacuação de pessoas com mobilidade reduzida.",
+    },
+    {
+      icon: "hotel",
+      title: "Hotéis",
+      text: "Recepção e acessos de uso permanente que integram o plano de evacuação.",
+    },
+    {
+      icon: "school",
+      title: "Escolas e universidades",
+      text: "Saída simultânea de muita gente em pouco tempo, com público jovem.",
+    },
+    {
+      icon: "theater",
+      title: "Casas de espetáculo e locais de reunião",
+      text: "Ocupação concentrada, com exigência de saída de emergência dimensionada.",
+    },
+    {
+      icon: "plane",
+      title: "Aeroportos e terminais",
+      text: "Fluxo intenso e ininterrupto, com rotas de evacuação sinalizadas.",
+    },
+    {
+      icon: "store",
+      title: "Supermercados",
+      text: "Entradas largas, carrinhos e pico de público em horários concentrados.",
+    },
+    {
+      icon: "building",
+      title: "Edifícios corporativos",
+      text: "Controle de acesso no dia a dia e saída desimpedida na emergência.",
+    },
+  ],
+  images: [
+    {
+      src: "/produtos/antipanico-total-hero.png",
+      alt: "Porta de correr automática com sistema antipânico em operação normal: quatro folhas de vidro sob o cabeçote de alumínio, com o mecanismo de trilho, correia e motor à vista",
+    },
+    {
+      src: "/produtos/antipanico-total-abertura-emergencia.png",
+      alt: "A mesma porta em abertura de emergência: as folhas móveis e os painéis fixos laterais girados para fora sobre os eixos, deixando o vão inteiro livre no sentido da saída",
+    },
+    {
+      src: "/produtos/antipanico-total-especificacoes.png",
+      alt: "Tabela de especificações: modo de operação, modo de folha, capacidade de carga, largura da folha, alimentação, velocidades, tempo de permanência aberta, motor, temperatura e proteção contra incêndio",
+    },
+  ],
+  datasheetUrl: "/panfletos/Antipanico-Total-Panfleto.pdf",
+};
+
+
+/**
+ * Grupo final da ficha, gerado a partir dos campos centralizados de
+ * certificação e garantia. É o que torna a inclusão futura de uma
+ * classificação de resistência ao fogo uma edição de dado: basta preencher
+ * `certifications.fireRating` e a linha passa a aparecer na página, na
+ * apresentação e no panfleto, sem tocar em componente nenhum.
+ */
+function complianceGroup(product: Product): SpecGroup {
+  const rows: SpecRow[] = [];
+  if (product.certifications.seals.length > 0) {
+    rows.push({
+      label: "Certificações do mecanismo",
+      value: product.certifications.seals.join(", "),
+    });
+  }
+  if (product.certifications.fireRating) {
+    rows.push({
+      label: "Classificação de resistência ao fogo",
+      value: product.certifications.fireRating,
+    });
+  }
+  if (product.certifications.lifecycle) {
+    rows.push({
+      label: "Ciclo de vida",
+      value: product.certifications.lifecycle,
+      mono: true,
+    });
+  }
+  rows.push({
+    label: "Garantia",
+    value: product.warranty.support
+      ? product.warranty.term + " \u00b7 " + product.warranty.support
+      : product.warranty.term,
+  });
+  return { title: "Certificações e garantia", rows };
+}
+
+const catalogo: Product[] = [ag200, ag400, agT200, agT400, antipanicoTotal];
+
+export const products: Product[] = catalogo.map((product) => ({
+  ...product,
+  specGroups: [...product.specGroups, complianceGroup(product)],
+}));
 
 /** Produtos agrupados por categoria, na ordem de CATEGORIES. */
 export const productsByCategory = CATEGORIES.map((category) => ({

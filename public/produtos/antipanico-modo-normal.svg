@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" role="img" aria-labelledby="t">
+  <title id="t">Planta do modo normal: as duas folhas móveis deslizam para os lados e se recolhem sobre os painéis fixos, liberando o vão central</title>
+  <rect width="300" height="150" fill="#ffffff"/>
+  <rect x="26" y="67" width="70" height="11" rx="2" fill="#082868" fill-opacity=".12" stroke="#082868" stroke-opacity=".45" stroke-width="2"/>
+  <rect x="204" y="67" width="70" height="11" rx="2" fill="#082868" fill-opacity=".12" stroke="#082868" stroke-opacity=".45" stroke-width="2"/>
+  <rect x="29" y="54" width="70" height="11" rx="2" fill="#082868" fill-opacity=".25" stroke="#082868" stroke-opacity="1" stroke-width="2"/>
+  <rect x="201" y="54" width="70" height="11" rx="2" fill="#082868" fill-opacity=".25" stroke="#082868" stroke-opacity="1" stroke-width="2"/>
+  <path d="M112 100 H88" stroke="#082868" stroke-opacity=".55" stroke-width="2"/>
+  <polygon points="82,100 92,96 92,104" fill="#082868" fill-opacity=".55"/>
+  <path d="M188 100 H212" stroke="#082868" stroke-opacity=".55" stroke-width="2"/>
+  <polygon points="218,100 208,96 208,104" fill="#082868" fill-opacity=".55"/>
+  <text x="150" y="24" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="#082868">Modo normal</text>
+  <text x="150" y="40" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5" fill="#5b6472">as folhas deslizam sobre os fixos</text>
+  <rect x="22" y="62" width="8" height="22" fill="#082868" opacity=".7"/>
+  <rect x="270" y="62" width="8" height="22" fill="#082868" opacity=".7"/>
+  <line x1="96" y1="128" x2="204" y2="128" stroke="#082868" stroke-opacity=".55" stroke-width="2"/>
+  <line x1="96" y1="122" x2="96" y2="134" stroke="#082868" stroke-opacity=".55" stroke-width="2"/>
+  <line x1="204" y1="122" x2="204" y2="134" stroke="#082868" stroke-opacity=".55" stroke-width="2"/>
+  <text x="150" y="146" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600" fill="#5b6472">vão livre de passagem</text>
+</svg>

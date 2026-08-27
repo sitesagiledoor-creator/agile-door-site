@@ -34,7 +34,9 @@ export const WHATSAPP_MESSAGES = {
    * linha telescópica), para a mensagem já chegar com o tipo certo.
    */
   product: (productName: string, productType = "porta automática") =>
-    `Olá! Tenho interesse na ${productType} ${productName} e gostaria de solicitar um orçamento.`,
+    `Olá! Tenho interesse na ${[productType, productName]
+      .filter(Boolean)
+      .join(" ")} e gostaria de solicitar um orçamento.`,
 } as const;
 
 /**

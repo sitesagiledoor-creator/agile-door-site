@@ -3,7 +3,10 @@ import { notFound } from "next/navigation";
 import { Fan, FileText } from "lucide-react";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { ProductCard } from "@/components/sections/ProductCard";
+import { EmergencySystem } from "@/components/sections/EmergencySystem";
+import { FireProtection } from "@/components/sections/FireProtection";
 import { ProductGallery } from "@/components/sections/ProductGallery";
+import { RegulatoryContext } from "@/components/sections/RegulatoryContext";
 import { Reveal } from "@/components/sections/Reveal";
 import { SpecTable } from "@/components/sections/SpecTable";
 import { TelescopicSystem } from "@/components/sections/TelescopicSystem";
@@ -42,6 +45,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: product.shortDescription,
       images: [{ url: product.images[0].src }],
     },
+    // Sem isto o cartão do Twitter cai na descrição padrão do site, que fala
+    // das certificações do catálogo inteiro — impreciso na página de um
+    // produto que não tem todos aqueles selos.
+    twitter: {
+      title: `${product.name} — ${product.category} | ${SITE.name}`,
+      description: product.shortDescription,
+      images: [product.images[0].src],
+    },
   };
 }
 
@@ -68,6 +79,9 @@ export default async function ProdutoPage({ params }: Props) {
     ),
   };
 
+  // Nome curto nos títulos de seção e rótulos de botão: o nome comercial
+  // completo continua no h1, na metadata, no JSON-LD e no WhatsApp.
+  const shortName = product.shortName ?? product.name;
   const relatedProducts = products.filter((p) => p.slug !== product.slug);
   const whatsappMessage = WHATSAPP_MESSAGES.product(
     product.name,
@@ -114,6 +128,12 @@ export default async function ProdutoPage({ params }: Props) {
                   {badge}
                 </li>
               ))}
+              {/* Selos: saem do campo centralizado, nunca digitados na página */}
+              {product.certifications.seals.length > 0 && (
+                <li className="border border-brand-orange/40 bg-brand-orange/10 px-3 py-1.5 text-xs font-semibold text-brand-orange-dark">
+                  {product.certifications.seals.join(" · ")}
+                </li>
+              )}
             </ul>
 
             <dl className="mt-8 grid grid-cols-3 gap-4 border-y border-brand-navy/10 py-5">
@@ -141,7 +161,7 @@ export default async function ProdutoPage({ params }: Props) {
                   className="w-full"
                 >
                   <WhatsAppIcon className="h-5 w-5" />
-                  Solicitar Orçamento do {product.name} via WhatsApp
+                  Solicitar Orçamento do {shortName} via WhatsApp
                 </Button>
               </span>
               {product.datasheetUrl ? (
@@ -175,8 +195,8 @@ export default async function ProdutoPage({ params }: Props) {
         <Container className="max-w-4xl">
           <Reveal>
             <SectionHeading
-              eyebrow={`Onde instalar ${product.name}!`}
-              title={`Por que especificar o ${product.name}`}
+              eyebrow={`Onde instalar ${shortName}!`}
+              title={`Por que especificar o ${shortName}`}
             />
             <div className="mt-6 space-y-4 text-base leading-relaxed text-neutral-muted">
               {product.overview.map((paragraph) => (
@@ -212,6 +232,26 @@ export default async function ProdutoPage({ params }: Props) {
           )}
         </Container>
       </section>
+
+      {/* Como funciona o antipânico — exclusivo da linha antipânico.
+          Vem antes dos diferenciais porque é a seção que explica o produto:
+          sem ela, os diferenciais não fazem sentido. */}
+      {product.emergencySystem && (
+        <EmergencySystem
+          data={product.emergencySystem}
+          productName={shortName}
+        />
+      )}
+
+      {/* Proteção contra incêndio */}
+      {product.fireProtection && (
+        <FireProtection data={product.fireProtection} />
+      )}
+
+      {/* Contexto normativo */}
+      {product.regulatoryContext && (
+        <RegulatoryContext data={product.regulatoryContext} />
+      )}
 
       {/* Diferenciais */}
       <section className="bg-white py-16 sm:py-20">
@@ -281,7 +321,7 @@ export default async function ProdutoPage({ params }: Props) {
             <Reveal>
               <SectionHeading
                 eyebrow="Aplicações"
-                title={`Onde o ${product.name} se encaixa bem`}
+                title={`Onde o ${shortName} se encaixa bem`}
               />
             </Reveal>
             <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -328,7 +368,7 @@ export default async function ProdutoPage({ params }: Props) {
       )}
 
       <FinalCta
-        title={`Pronto para instalar o ${product.name}?`}
+        title={`Pronto para instalar o ${shortName}?`}
         text="Envie as medidas do vão e uma foto da entrada pelo WhatsApp: retornamos com compatibilidade confirmada e orçamento."
         whatsappMessage={whatsappMessage}
       />
