@@ -4,9 +4,15 @@ import { Reveal } from "@/components/sections/Reveal";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { CONTACT, WHATSAPP_MESSAGES, whatsappLink } from "@/lib/constants";
+import {
+  CONTACT,
+  WHATSAPP_MESSAGES,
+  canonicalUrl,
+  whatsappLink,
+} from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonicalUrl("/contato") },
   title: "Contato",
   description:
     "Fale com a Agile Door pelo WhatsApp, telefone ou e-mail: orçamentos, dúvidas técnicas e suporte para portas automáticas.",

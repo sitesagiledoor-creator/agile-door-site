@@ -5,7 +5,7 @@ import { MetaPixel } from "@/components/layout/MetaPixel";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WhatsAppFAB } from "@/components/layout/WhatsAppFAB";
-import { CONTACT, SITE } from "@/lib/constants";
+import { CONTACT, SITE, canonicalUrl } from "@/lib/constants";
 import "./globals.css";
 
 const inter = Inter({
@@ -29,6 +29,9 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
+  // Canônica da home. Cada página define a sua; sem isto o mesmo
+  // conteúdo responderia em mais de um endereço para o buscador.
+  alternates: { canonical: canonicalUrl("") },
   title: {
     default: `${SITE.name} — Portas Automáticas com Certificação Internacional`,
     template: `%s | ${SITE.name}`,

@@ -6,7 +6,7 @@ import { FinalCta } from "@/components/sections/FinalCta";
 import { Reveal } from "@/components/sections/Reveal";
 import { Container } from "@/components/ui/Container";
 import { blogPosts, formatPostDate, getBlogPost } from "@/data/blog";
-import { SITE } from "@/lib/constants";
+import { SITE, canonicalUrl } from "@/lib/constants";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -23,6 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: post.title,
+    alternates: {
+      canonical: canonicalUrl(`/blog/${post.slug}`),
+    },
     description: post.description,
     openGraph: {
       type: "article",

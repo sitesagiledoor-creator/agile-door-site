@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/sections/Reveal";
 import { Container } from "@/components/ui/Container";
-import { CONTACT, SITE } from "@/lib/constants";
+import { CONTACT, SITE, canonicalUrl } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonicalUrl("/politica-de-cookies") },
   title: "Política de Cookies",
   description:
     "Quais cookies e tecnologias de armazenamento o site da Agile Door utiliza e como gerenciar suas preferências.",
@@ -80,8 +81,8 @@ export default function PoliticaDeCookiesPage() {
                         Cookie do Meta (Facebook/Instagram)
                       </td>
                       <td className="border-t border-brand-navy/10 px-4 py-2.5">
-                        Medir o resultado dos nossos anúncios: identifica de qual
-                        anúncio a visita veio.
+                        Medir o resultado dos nossos anúncios: identifica de
+                        qual anúncio a visita veio.
                       </td>
                     </tr>
                   </tbody>
@@ -113,10 +114,10 @@ export default function PoliticaDeCookiesPage() {
               </p>
               <p className="mt-3">
                 O <strong>pixel do Meta Ads</strong> é carregado a partir de{" "}
-                <span className="font-mono text-xs">connect.facebook.net</span> e
-                envia ao Meta a informação de que houve uma visita, para medir os
-                anúncios da Agile Door. O tratamento desses dados pelo Meta segue
-                as políticas da própria plataforma.
+                <span className="font-mono text-xs">connect.facebook.net</span>{" "}
+                e envia ao Meta a informação de que houve uma visita, para medir
+                os anúncios da Agile Door. O tratamento desses dados pelo Meta
+                segue as políticas da própria plataforma.
               </p>
             </section>
 

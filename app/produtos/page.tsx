@@ -5,8 +5,10 @@ import { Reveal } from "@/components/sections/Reveal";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { productsByCategory } from "@/data/products";
+import { canonicalUrl } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonicalUrl("/produtos") },
   title: "Produtos",
   description:
     "Catálogo de portas automáticas da Agile Door: operadores de porta de correr e de porta telescópica automática, com certificação internacional CE, TÜV e ISO 9001.",

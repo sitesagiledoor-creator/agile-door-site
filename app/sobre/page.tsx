@@ -4,8 +4,10 @@ import { FinalCta } from "@/components/sections/FinalCta";
 import { Reveal } from "@/components/sections/Reveal";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { canonicalUrl } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonicalUrl("/sobre") },
   title: "Sobre a Agile Door",
   description:
     "Conheça a Agile Door: portas automáticas certificadas, com suporte técnico direto e ágil, da especificação ao pós-venda.",

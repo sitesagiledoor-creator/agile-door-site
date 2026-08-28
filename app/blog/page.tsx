@@ -5,8 +5,10 @@ import { Reveal } from "@/components/sections/Reveal";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { blogPosts, formatPostDate } from "@/data/blog";
+import { canonicalUrl } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonicalUrl("/blog") },
   title: "Blog",
   description:
     "Guias práticos sobre portas automáticas: como especificar, normas de segurança, instalação e manutenção — pela equipe da Agile Door.",
@@ -68,8 +70,8 @@ export default function BlogPage() {
           <Reveal delay={0.15}>
             <p className="mt-10 text-sm leading-relaxed text-neutral-muted">
               Novos guias são publicados conforme as dúvidas mais comuns dos
-              nossos clientes. Tem um tema que gostaria de ver aqui? Sugira
-              pelo WhatsApp.
+              nossos clientes. Tem um tema que gostaria de ver aqui? Sugira pelo
+              WhatsApp.
             </p>
           </Reveal>
         </Container>

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/sections/Reveal";
 import { Container } from "@/components/ui/Container";
-import { CONTACT, SITE } from "@/lib/constants";
+import { CONTACT, SITE, canonicalUrl } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonicalUrl("/politica-de-privacidade") },
   title: "Política de Privacidade",
   description:
     "Como a Agile Door coleta, usa e protege os seus dados pessoais, em conformidade com a LGPD (Lei nº 13.709/2018).",
@@ -49,9 +50,9 @@ export default function PoliticaDePrivacidadePage() {
                 botões de WhatsApp, você é direcionado ao aplicativo
                 WhatsApp/Meta (que possui política de privacidade própria); ao
                 usar os links de telefone ou e-mail, a comunicação ocorre pelo
-                seu próprio aplicativo. Tratamos os dados que você nos envia
-                por esses canais (nome, telefone, conteúdo da conversa) apenas
-                para responder à sua solicitação.
+                seu próprio aplicativo. Tratamos os dados que você nos envia por
+                esses canais (nome, telefone, conteúdo da conversa) apenas para
+                responder à sua solicitação.
               </p>
               <p className="mt-3">
                 Utilizamos o pixel do Meta Ads para medir os resultados dos
