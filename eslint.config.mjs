@@ -24,6 +24,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Onde o pacote de hospedagem e extraido para teste: e o proprio build
+    // copiado, entao o lint reclamaria de milhares de linhas de JS minificado.
+    ".teste-pacote/**",
   ]),
 ]);
 

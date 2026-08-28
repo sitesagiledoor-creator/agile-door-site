@@ -18,10 +18,10 @@ import { Reveal } from "./Reveal";
  */
 const BRANDS = [
   { name: "Rede D'Or", file: "rede-dor.png" },
-  { name: "Casas Bahia", file: "casas-bahia.png" },
   { name: "Magalu", file: "magalu.png" },
   { name: "Iguatemi", file: "iguatemi.png" },
   { name: "Atacadão", file: "atacadao.png" },
+  { name: "Assaí", file: "assai.png" },
   { name: "Panobianco", file: "panobianco.png" },
   { name: "Bradesco", file: "bradesco.png" },
   { name: "Santander", file: "santander.png" },
