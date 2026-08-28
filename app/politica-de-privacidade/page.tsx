@@ -54,8 +54,11 @@ export default function PoliticaDePrivacidadePage() {
                 para responder à sua solicitação.
               </p>
               <p className="mt-3">
-                Não utilizamos cookies de publicidade nem rastreadores de
-                terceiros. Detalhes sobre o armazenamento local estritamente
+                Utilizamos o pixel do Meta Ads para medir os resultados dos
+                nossos anúncios, e ele só é carregado se você aceitar no aviso de
+                cookies — recusando, nada é enviado ao Meta. Nenhum outro
+                rastreador de terceiros é utilizado. Detalhes sobre o
+                armazenamento local estritamente
                 necessário estão na nossa{" "}
                 <Link
                   href="/politica-de-cookies"

@@ -43,7 +43,9 @@ export default function PoliticaDeCookiesPage() {
                 2. O que o site da {SITE.name} utiliza
               </h2>
               <p className="mt-3">
-                Este site utiliza apenas armazenamento estritamente necessário:
+                Este site utiliza armazenamento estritamente necessário e, {" "}
+                <strong>somente se você aceitar</strong>, o pixel de marketing
+                descrito abaixo:
               </p>
               <div className="mt-4 overflow-x-auto">
                 <table className="w-full border border-brand-navy/10 text-sm">
@@ -71,14 +73,34 @@ export default function PoliticaDeCookiesPage() {
                         exibi-lo em todas as visitas.
                       </td>
                     </tr>
+                    <tr>
+                      <td className="border-t border-brand-navy/10 px-4 py-2.5 font-mono text-xs">
+                        _fbp
+                      </td>
+                      <td className="border-t border-brand-navy/10 px-4 py-2.5">
+                        Cookie do Meta (Facebook/Instagram)
+                      </td>
+                      <td className="border-t border-brand-navy/10 px-4 py-2.5">
+                        Medir o resultado dos nossos anúncios: identifica de qual
+                        anúncio a visita veio.{" "}
+                        <strong>
+                          Só é criado se você aceitar no aviso de cookies.
+                        </strong>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
               <p className="mt-4">
-                <strong>Não utilizamos</strong> cookies de publicidade,
-                rastreamento entre sites ou análise de comportamento de
-                terceiros. Se isso mudar no futuro, esta política será
-                atualizada e o seu consentimento será solicitado previamente.
+                Se você recusar no aviso de cookies — ou enquanto não
+                escolher — o pixel <strong>não é carregado</strong> e nenhum
+                dado é enviado ao Meta. Nenhum outro rastreador de terceiros é
+                utilizado, e não fazemos análise de comportamento além dessa
+                medição de anúncios.
+              </p>
+              <p className="mt-4">
+                Para mudar a sua escolha depois, apague os dados do site no seu
+                navegador: o aviso volta a aparecer na visita seguinte.
               </p>
             </section>
 
@@ -91,6 +113,14 @@ export default function PoliticaDeCookiesPage() {
                 WhatsApp/Meta, que pode utilizar cookies próprios em seus
                 domínios. O mapa de localização, quando ativado, é fornecido
                 pelo Google Maps, sujeito às políticas do Google.
+              </p>
+              <p className="mt-3">
+                Aceitando os cookies, o <strong>pixel do Meta Ads</strong> é
+                carregado a partir de{" "}
+                <span className="font-mono text-xs">connect.facebook.net</span> e
+                envia ao Meta a informação de que houve uma visita, para medir os
+                anúncios da Agile Door. O tratamento desses dados pelo Meta segue
+                as políticas da própria plataforma.
               </p>
             </section>
 

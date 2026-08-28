@@ -2,54 +2,26 @@
 
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
-
-const STORAGE_KEY = "agiledoor-cookie-consent";
-const CONSENT_EVENT = "agiledoor-consent-change";
-
-function subscribe(callback: () => void) {
-  window.addEventListener("storage", callback);
-  window.addEventListener(CONSENT_EVENT, callback);
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener(CONSENT_EVENT, callback);
-  };
-}
-
-function getSnapshot(): string | null {
-  try {
-    return localStorage.getItem(STORAGE_KEY);
-  } catch {
-    // localStorage indisponível (ex.: modo privado restrito): não exibe.
-    return "unavailable";
-  }
-}
-
-function getServerSnapshot(): string | null {
-  // No servidor ainda não há como saber a escolha: renderiza oculto.
-  return "pending";
-}
+import {
+  readConsent,
+  readConsentOnServer,
+  saveConsent,
+  subscribeConsent,
+} from "@/lib/consent";
 
 /**
  * Banner de consentimento de cookies (LGPD).
- * O site usa apenas armazenamento estritamente necessário; se um dia forem
- * adicionados analytics/marketing, condicionar o carregamento à escolha
- * registrada aqui ("accepted" | "rejected").
+ *
+ * A escolha registrada aqui é o que libera o pixel de marketing
+ * (`MetaPixel.tsx`): quem recusa, ou ainda não escolheu, não tem rastreamento
+ * carregado. O estado vive em `lib/consent.ts`, compartilhado pelos dois.
  */
 export function CookieBanner() {
   const consent = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getServerSnapshot
+    subscribeConsent,
+    readConsent,
+    readConsentOnServer
   );
-
-  function decide(choice: "accepted" | "rejected") {
-    try {
-      localStorage.setItem(STORAGE_KEY, choice);
-    } catch {
-      // sem armazenamento, a escolha vale só para esta visita
-    }
-    window.dispatchEvent(new Event(CONSENT_EVENT));
-  }
 
   if (consent !== null) return null;
 
@@ -61,8 +33,9 @@ export function CookieBanner() {
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-3xl text-sm leading-relaxed text-white/85">
-          Usamos apenas cookies e armazenamento estritamente necessários para o
-          funcionamento do site — nada de rastreamento de publicidade. Saiba
+          Usamos armazenamento estritamente necessário para o site funcionar e,
+          se você aceitar, o pixel do Meta Ads para medir os resultados dos
+          nossos anúncios. Recusando, nada de publicidade é carregado. Saiba
           mais na nossa{" "}
           <Link
             href="/politica-de-cookies"
@@ -75,14 +48,14 @@ export function CookieBanner() {
         <div className="flex shrink-0 gap-3">
           <button
             type="button"
-            onClick={() => decide("rejected")}
+            onClick={() => saveConsent("rejected")}
             className="border-2 border-white/60 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Recusar
           </button>
           <button
             type="button"
-            onClick={() => decide("accepted")}
+            onClick={() => saveConsent("accepted")}
             className="bg-brand-orange px-4 py-2 text-sm font-semibold text-brand-navy-dark transition-colors hover:bg-brand-orange-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Aceitar

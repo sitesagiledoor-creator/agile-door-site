@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Inter, Space_Grotesk } from "next/font/google";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { MetaPixel } from "@/components/layout/MetaPixel";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WhatsAppFAB } from "@/components/layout/WhatsAppFAB";
@@ -106,6 +107,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppFAB />
         <CookieBanner />
+        <MetaPixel />
       </body>
     </html>
   );

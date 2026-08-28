@@ -9,14 +9,17 @@ const isDev = process.env.NODE_ENV === "development";
  *   um proxy dinâmico — desnecessário para um site institucional estático.
  * - 'unsafe-eval' e ws: somente em desenvolvimento (Fast Refresh/HMR).
  * - frame-src libera apenas o embed do Google Maps.
+   * - connect.facebook.net e www.facebook.com liberam o pixel do Meta Ads,
+   *   que só carrega depois do aceite no banner de cookies (MetaPixel.tsx).
+   *   Sem estas três entradas o navegador bloqueia o pixel em silêncio.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://connect.facebook.net${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  "img-src 'self' data: blob: https://www.facebook.com",
   "font-src 'self'",
-  `connect-src 'self'${isDev ? " ws:" : ""}`,
+  `connect-src 'self' https://www.facebook.com https://connect.facebook.net${isDev ? " ws:" : ""}`,
   "frame-src https://www.google.com",
   "object-src 'none'",
   "base-uri 'self'",
