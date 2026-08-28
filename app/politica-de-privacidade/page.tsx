@@ -55,10 +55,10 @@ export default function PoliticaDePrivacidadePage() {
               </p>
               <p className="mt-3">
                 Utilizamos o pixel do Meta Ads para medir os resultados dos
-                nossos anúncios, e ele só é carregado se você aceitar no aviso de
-                cookies — recusando, nada é enviado ao Meta. Nenhum outro
-                rastreador de terceiros é utilizado. Detalhes sobre o
-                armazenamento local estritamente
+                nossos anúncios; ele registra a visita e o clique nos botões de
+                WhatsApp. Nenhum outro rastreador de terceiros é utilizado, e é
+                possível bloqueá-lo pelo navegador — a Política de Cookies
+                explica como. Detalhes sobre o armazenamento local estritamente
                 necessário estão na nossa{" "}
                 <Link
                   href="/politica-de-cookies"

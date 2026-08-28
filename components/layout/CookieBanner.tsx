@@ -3,27 +3,31 @@
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
-  readConsent,
-  readConsentOnServer,
-  saveConsent,
-  subscribeConsent,
+  marcarAvisoVisto,
+  readAviso,
+  readAvisoOnServer,
+  subscribeAviso,
 } from "@/lib/consent";
 
 /**
- * Banner de consentimento de cookies (LGPD).
+ * Aviso de cookies (LGPD — dever de informação).
  *
- * A escolha registrada aqui é o que libera o pixel de marketing
- * (`MetaPixel.tsx`): quem recusa, ou ainda não escolheu, não tem rastreamento
- * carregado. O estado vive em `lib/consent.ts`, compartilhado pelos dois.
+ * ⚠️ Deixou de ser um banner de consentimento em 28/08/2026: por decisão
+ * comercial o pixel do Meta Ads passou a carregar em toda visita, então os
+ * botões "Aceitar" e "Recusar" saíram. Manter um "Recusar" que não recusa nada
+ * seria prometer uma escolha que o site não cumpre.
+ *
+ * O que ficou é o dever de informar: o aviso diz o que é coletado e leva à
+ * Política de Cookies, onde estão a finalidade e como bloquear pelo navegador.
  */
 export function CookieBanner() {
-  const consent = useSyncExternalStore(
-    subscribeConsent,
-    readConsent,
-    readConsentOnServer
+  const estado = useSyncExternalStore(
+    subscribeAviso,
+    readAviso,
+    readAvisoOnServer
   );
 
-  if (consent !== null) return null;
+  if (estado !== null) return null;
 
   return (
     <div
@@ -33,10 +37,9 @@ export function CookieBanner() {
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-3xl text-sm leading-relaxed text-white/85">
-          Usamos armazenamento estritamente necessário para o site funcionar e,
-          se você aceitar, o pixel do Meta Ads para medir os resultados dos
-          nossos anúncios. Recusando, nada de publicidade é carregado. Saiba
-          mais na nossa{" "}
+          Usamos armazenamento necessário para o site funcionar e o pixel do
+          Meta Ads, que mede o resultado dos nossos anúncios. O que é coletado e
+          como bloquear pelo navegador estão na nossa{" "}
           <Link
             href="/politica-de-cookies"
             className="font-semibold text-brand-orange-light underline underline-offset-2 hover:text-white"
@@ -45,20 +48,13 @@ export function CookieBanner() {
           </Link>
           .
         </p>
-        <div className="flex shrink-0 gap-3">
+        <div className="flex shrink-0">
           <button
             type="button"
-            onClick={() => saveConsent("rejected")}
-            className="border-2 border-white/60 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            onClick={marcarAvisoVisto}
+            className="bg-brand-orange px-5 py-2 text-sm font-semibold text-brand-navy-dark transition-colors hover:bg-brand-orange-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
-            Recusar
-          </button>
-          <button
-            type="button"
-            onClick={() => saveConsent("accepted")}
-            className="bg-brand-orange px-4 py-2 text-sm font-semibold text-brand-navy-dark transition-colors hover:bg-brand-orange-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            Aceitar
+            Entendi
           </button>
         </div>
       </div>

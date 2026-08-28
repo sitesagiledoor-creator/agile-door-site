@@ -43,9 +43,8 @@ export default function PoliticaDeCookiesPage() {
                 2. O que o site da {SITE.name} utiliza
               </h2>
               <p className="mt-3">
-                Este site utiliza armazenamento estritamente necessário e, {" "}
-                <strong>somente se você aceitar</strong>, o pixel de marketing
-                descrito abaixo:
+                Este site utiliza armazenamento necessário ao funcionamento e o
+                pixel de marketing descrito abaixo:
               </p>
               <div className="mt-4 overflow-x-auto">
                 <table className="w-full border border-brand-navy/10 text-sm">
@@ -65,11 +64,11 @@ export default function PoliticaDeCookiesPage() {
                   <tbody>
                     <tr>
                       <td className="px-4 py-2.5 font-mono text-xs">
-                        agiledoor-cookie-consent
+                        agiledoor-aviso-cookies
                       </td>
                       <td className="px-4 py-2.5">localStorage</td>
                       <td className="px-4 py-2.5">
-                        Registrar a sua escolha no aviso de cookies, para não
+                        Registrar que você já viu o aviso de cookies, para não
                         exibi-lo em todas as visitas.
                       </td>
                     </tr>
@@ -82,25 +81,23 @@ export default function PoliticaDeCookiesPage() {
                       </td>
                       <td className="border-t border-brand-navy/10 px-4 py-2.5">
                         Medir o resultado dos nossos anúncios: identifica de qual
-                        anúncio a visita veio.{" "}
-                        <strong>
-                          Só é criado se você aceitar no aviso de cookies.
-                        </strong>
+                        anúncio a visita veio.
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <p className="mt-4">
-                Se você recusar no aviso de cookies — ou enquanto não
-                escolher — o pixel <strong>não é carregado</strong> e nenhum
-                dado é enviado ao Meta. Nenhum outro rastreador de terceiros é
-                utilizado, e não fazemos análise de comportamento além dessa
-                medição de anúncios.
+                Nenhum outro rastreador de terceiros é utilizado, e não fazemos
+                análise de comportamento além dessa medição de anúncios.
               </p>
               <p className="mt-4">
-                Para mudar a sua escolha depois, apague os dados do site no seu
-                navegador: o aviso volta a aparecer na visita seguinte.
+                <strong>Como recusar:</strong> o pixel pode ser bloqueado no
+                próprio navegador, pelas configurações de cookies e rastreamento
+                de terceiros, ou por extensões de bloqueio. O site continua
+                funcionando normalmente com ele bloqueado. Você também pode
+                ajustar o que o Meta usa para anúncios nas preferências da sua
+                conta do Facebook ou Instagram.
               </p>
             </section>
 
@@ -115,8 +112,7 @@ export default function PoliticaDeCookiesPage() {
                 pelo Google Maps, sujeito às políticas do Google.
               </p>
               <p className="mt-3">
-                Aceitando os cookies, o <strong>pixel do Meta Ads</strong> é
-                carregado a partir de{" "}
+                O <strong>pixel do Meta Ads</strong> é carregado a partir de{" "}
                 <span className="font-mono text-xs">connect.facebook.net</span> e
                 envia ao Meta a informação de que houve uma visita, para medir os
                 anúncios da Agile Door. O tratamento desses dados pelo Meta segue

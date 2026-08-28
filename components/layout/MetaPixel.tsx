@@ -1,24 +1,22 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useSyncExternalStore } from "react";
-import {
-  readConsent,
-  readConsentOnServer,
-  subscribeConsent,
-} from "@/lib/consent";
+import { useEffect } from "react";
 
 /**
  * Pixel do Meta Ads.
  *
- * ⚠️ Só carrega depois que o visitante ACEITA os cookies no banner. É
- * rastreamento de publicidade: sob a LGPD depende de consentimento, e o banner
- * do site oferece "Recusar" — disparar assim mesmo tornaria o botão decorativo.
- * Quem recusa, ou ainda não escolheu, não tem nada carregado.
+ * Carrega em toda visita, sem depender de escolha do visitante — decisão
+ * comercial de 28/08/2026. O aviso de cookies informa que o pixel existe e
+ * aponta para a Política de Cookies, mas não oferece recusa.
  *
  * O `fbq` precisa existir antes do script externo chegar: a função de fila do
  * Meta guarda as chamadas e as reenvia quando o `fbevents.js` carrega. Por isso
  * a fila é montada aqui, e não copiada como bloco inline.
+ *
+ * ⚠️ Depende da CSP liberar connect.facebook.net (script) e www.facebook.com
+ * (imagem e conexão), em next.config.ts E em public/.htaccess. Sem isso o
+ * navegador bloqueia o pixel em silêncio: não dá erro, apenas não mede.
  */
 
 const PIXEL_ID = "918190761341070";
@@ -64,20 +62,14 @@ function carregarPixel() {
 }
 
 export function MetaPixel() {
-  const consent = useSyncExternalStore(
-    subscribeConsent,
-    readConsent,
-    readConsentOnServer
-  );
   const pathname = usePathname();
 
   useEffect(() => {
-    if (consent !== "accepted") return;
     carregarPixel();
     // O site navega sem recarregar a página: sem isto, só a primeira tela
     // contaria como visita.
     window.fbq?.("track", "PageView");
-  }, [consent, pathname]);
+  }, [pathname]);
 
   // Clique no WhatsApp = Lead. É a única conversão que este site tem: não há
   // carrinho nem formulário, todo orçamento começa numa conversa.
@@ -86,8 +78,6 @@ export function MetaPixel() {
   // os botões de produto e o CTA final — e os que vierem depois, sem ninguém
   // precisar lembrar de instrumentar.
   useEffect(() => {
-    if (consent !== "accepted") return;
-
     function aoClicar(evento: MouseEvent) {
       const alvo = evento.target as Element | null;
       const link = alvo?.closest?.<HTMLAnchorElement>('a[href*="wa.me"]');
@@ -102,7 +92,7 @@ export function MetaPixel() {
 
     document.addEventListener("click", aoClicar);
     return () => document.removeEventListener("click", aoClicar);
-  }, [consent, pathname]);
+  }, [pathname]);
 
   return null;
 }

@@ -1,45 +1,49 @@
 /**
- * Consentimento de cookies (LGPD), compartilhado pelo banner e por quem
- * depende da escolha do visitante.
+ * Aviso de cookies.
  *
- * Ficava dentro do CookieBanner. Saiu para cá quando entrou o pixel de
- * marketing: quem dispara rastreamento precisa ler a MESMA escolha que o
- * banner grava, e duas cópias da chave acabariam divergindo.
+ * ⚠️ Isto NÃO é mais um consentimento com escolha. Por decisão comercial de
+ * 28/08/2026 o pixel de marketing passou a carregar em toda visita, então o
+ * banner deixou de oferecer "Aceitar/Recusar": oferecer um botão de recusa que
+ * não recusa nada seria pior do que não oferecer nenhum.
+ *
+ * O que ficou guardado é só se a pessoa já viu o aviso, para não repeti-lo a
+ * cada visita. A chave mudou de nome de propósito: quem tinha a escolha antiga
+ * gravada vê o aviso novo uma vez, porque os termos mudaram.
  */
 
-export const CONSENT_KEY = "agiledoor-cookie-consent";
-export const CONSENT_EVENT = "agiledoor-consent-change";
+export const AVISO_KEY = "agiledoor-aviso-cookies";
+export const AVISO_EVENT = "agiledoor-aviso-change";
 
-export type Consent = "accepted" | "rejected" | "pending" | "unavailable" | null;
+export type EstadoAviso = "visto" | "pendente" | "indisponivel" | null;
 
-export function subscribeConsent(callback: () => void) {
+export function subscribeAviso(callback: () => void) {
   window.addEventListener("storage", callback);
-  window.addEventListener(CONSENT_EVENT, callback);
+  window.addEventListener(AVISO_EVENT, callback);
   return () => {
     window.removeEventListener("storage", callback);
-    window.removeEventListener(CONSENT_EVENT, callback);
+    window.removeEventListener(AVISO_EVENT, callback);
   };
 }
 
-export function readConsent(): Consent {
+export function readAviso(): EstadoAviso {
   try {
-    return localStorage.getItem(CONSENT_KEY) as Consent;
+    return localStorage.getItem(AVISO_KEY) as EstadoAviso;
   } catch {
-    // localStorage indisponível (ex.: modo privado restrito).
-    return "unavailable";
+    // localStorage indisponível (ex.: modo privado restrito): não insiste.
+    return "indisponivel";
   }
 }
 
-/** No servidor ainda não há como saber a escolha. */
-export function readConsentOnServer(): Consent {
-  return "pending";
+/** No servidor ainda não há como saber: renderiza oculto. */
+export function readAvisoOnServer(): EstadoAviso {
+  return "pendente";
 }
 
-export function saveConsent(choice: "accepted" | "rejected") {
+export function marcarAvisoVisto() {
   try {
-    localStorage.setItem(CONSENT_KEY, choice);
+    localStorage.setItem(AVISO_KEY, "visto");
   } catch {
-    // sem armazenamento, a escolha vale só para esta visita
+    // sem armazenamento, vale só para esta visita
   }
-  window.dispatchEvent(new Event(CONSENT_EVENT));
+  window.dispatchEvent(new Event(AVISO_EVENT));
 }
