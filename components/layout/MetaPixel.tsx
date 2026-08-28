@@ -79,5 +79,30 @@ export function MetaPixel() {
     window.fbq?.("track", "PageView");
   }, [consent, pathname]);
 
+  // Clique no WhatsApp = Lead. É a única conversão que este site tem: não há
+  // carrinho nem formulário, todo orçamento começa numa conversa.
+  //
+  // Um ouvinte só, no documento, em vez de um por botão: pega o FAB, o header,
+  // os botões de produto e o CTA final — e os que vierem depois, sem ninguém
+  // precisar lembrar de instrumentar.
+  useEffect(() => {
+    if (consent !== "accepted") return;
+
+    function aoClicar(evento: MouseEvent) {
+      const alvo = evento.target as Element | null;
+      const link = alvo?.closest?.<HTMLAnchorElement>('a[href*="wa.me"]');
+      if (!link) return;
+      window.fbq?.("track", "Lead", {
+        // De onde saiu o contato: é o que separa "veio da página do AG400" de
+        // "veio da home" no gerenciador de anúncios.
+        content_name: pathname,
+        content_category: "whatsapp",
+      });
+    }
+
+    document.addEventListener("click", aoClicar);
+    return () => document.removeEventListener("click", aoClicar);
+  }, [consent, pathname]);
+
   return null;
 }
