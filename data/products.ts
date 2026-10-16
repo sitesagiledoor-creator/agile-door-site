@@ -290,7 +290,7 @@ const ag200: Product = {
     seals: ["CE", "TÜV", "ISO 9001", "RoHS"],
     lifecycle: "2 milhões de ciclos garantidos (aprovado pelo TÜV)",
   },
-  warranty: { term: "12 meses" },
+  warranty: { term: "12 meses · 24 meses na central de comando e no motor" },
   specGroups: [
     {
       title: "Motor e desempenho",
@@ -469,7 +469,7 @@ const ag400: Product = {
     seals: ["CE", "TÜV", "ISO 9001", "RoHS"],
     lifecycle: "2 milhões de ciclos garantidos (aprovado pelo TÜV)",
   },
-  warranty: { term: "12 meses" },
+  warranty: { term: "12 meses · 24 meses na central de comando e no motor" },
   specGroups: [
     {
       title: "Motor e desempenho",
@@ -677,7 +677,7 @@ const agT200: Product = {
   ],
   telescopicSystem: telescopicSystem("600 a 1500 mm"),
   certifications: { seals: [] },
-  warranty: { term: "12 meses" },
+  warranty: { term: "12 meses · 24 meses na central de comando e no motor" },
   specGroups: [
     {
       title: "Mecanismo e desempenho",
@@ -860,7 +860,7 @@ const agT400: Product = {
   ],
   telescopicSystem: telescopicSystem("600 a 1500 mm"),
   certifications: { seals: [] },
-  warranty: { term: "12 meses" },
+  warranty: { term: "12 meses · 24 meses na central de comando e no motor" },
   specGroups: [
     {
       title: "Mecanismo e desempenho",
@@ -1104,7 +1104,7 @@ const antipanicoTotal: Product = {
     // emitido por laboratório acreditado. Sem laudo, a classificação não pode
     // ser afirmada — a linha da ficha sai deste campo, sem mexer na página.
   },
-  warranty: { term: "12 meses" },
+  warranty: { term: "12 meses · 24 meses na central de comando e no motor" },
   specGroups: [
     {
       title: "Operação e capacidade",
